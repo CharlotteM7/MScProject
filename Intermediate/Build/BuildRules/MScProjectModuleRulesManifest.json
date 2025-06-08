@@ -1,0 +1,8 @@
+{
+	"SourceFiles": [
+		"C:\\Masters\\MScProject\\Source\\MScProject\\MScProject.Build.cs",
+		"C:\\Masters\\MScProject\\Source\\MScProject.Target.cs",
+		"C:\\Masters\\MScProject\\Source\\MScProjectEditor.Target.cs"
+	],
+	"EngineVersion": "5.5.4"
+}

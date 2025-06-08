@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="17.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <None Include="..\..\MScProject.uproject" />
+    <Filter Include="Source">
+      <UniqueIdentifier>{F31BBDD1-B3E8-3BCC-9652-680E16935819}</UniqueIdentifier>
+    </Filter>
+    <None Include="..\..\Source\MScProject.Target.cs">
+      <Filter>Source</Filter>
+    </None>
+    <None Include="..\..\Source\MScProjectEditor.Target.cs">
+      <Filter>Source</Filter>
+    </None>
+    <None Include="..\..\.vsconfig" />
+    <Filter Include="Config">
+      <UniqueIdentifier>{FA535FFB-25E1-3D20-B416-52F9BE21E06E}</UniqueIdentifier>
+    </Filter>
+    <None Include="..\..\Config\DefaultEditor.ini">
+      <Filter>Config</Filter>
+    </None>
+    <None Include="..\..\Config\DefaultEditorPerProjectUserSettings.ini">
+      <Filter>Config</Filter>
+    </None>
+    <None Include="..\..\Config\DefaultEngine.ini">
+      <Filter>Config</Filter>
+    </None>
+    <None Include="..\..\Config\DefaultGame.ini">
+      <Filter>Config</Filter>
+    </None>
+    <None Include="..\..\Config\DefaultInput.ini">
+      <Filter>Config</Filter>
+    </None>
+    <Filter Include="Source\MScProject">
+      <UniqueIdentifier>{55566703-10DC-3491-9894-73A2C4B452EA}</UniqueIdentifier>
+    </Filter>
+    <None Include="..\..\Source\MScProject\MScProject.Build.cs">
+      <Filter>Source\MScProject</Filter>
+    </None>
+    <ClCompile Include="..\..\Source\MScProject\MScProject.cpp">
+      <Filter>Source\MScProject</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\MScProject\MScProject.h">
+      <Filter>Source\MScProject</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\MScProject\MScProjectCharacter.cpp">
+      <Filter>Source\MScProject</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\MScProject\MScProjectCharacter.h">
+      <Filter>Source\MScProject</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\MScProject\MScProjectGameMode.cpp">
+      <Filter>Source\MScProject</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\MScProject\MScProjectGameMode.h">
+      <Filter>Source\MScProject</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\MScProject\MyCharacter.cpp">
+      <Filter>Source\MScProject</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\MScProject\MyCharacter.h">
+      <Filter>Source\MScProject</Filter>
+    </ClCompile>
+  </ItemGroup>
+</Project>
