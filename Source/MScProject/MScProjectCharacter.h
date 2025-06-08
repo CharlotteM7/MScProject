@@ -4,6 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Character.h"
+#include "ACipherPuzzleActor.h"
 #include "Logging/LogMacros.h"
 #include "MScProjectCharacter.generated.h"
 
@@ -44,6 +45,10 @@ class AMScProjectCharacter : public ACharacter
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Input, meta = (AllowPrivateAccess = "true"))
 	UInputAction* LookAction;
 
+	/** Interact Input Action */
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Input, meta = (AllowPrivateAccess = "true"))
+	UInputAction* InteractAction;
+
 public:
 	AMScProjectCharacter();
 	
@@ -55,6 +60,9 @@ protected:
 
 	/** Called for looking input */
 	void Look(const FInputActionValue& Value);
+
+	/** Called for Interact input */
+	void Interact(const FInputActionValue& Value);
 			
 
 protected:

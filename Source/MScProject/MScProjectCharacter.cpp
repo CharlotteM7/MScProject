@@ -85,6 +85,9 @@ void AMScProjectCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInpu
 
 		// Looking
 		EnhancedInputComponent->BindAction(LookAction, ETriggerEvent::Triggered, this, &AMScProjectCharacter::Look);
+
+		// Looking
+		EnhancedInputComponent->BindAction(InteractAction, ETriggerEvent::Triggered, this, &AMScProjectCharacter::Interact);
 	}
 	else
 	{
@@ -126,4 +129,26 @@ void AMScProjectCharacter::Look(const FInputActionValue& Value)
 		AddControllerYawInput(LookAxisVector.X);
 		AddControllerPitchInput(LookAxisVector.Y);
 	}
+}
+
+void AMScProjectCharacter::Interact(const FInputActionValue& Value)
+{
+	
+	// Trace in front of the player for interactable actors
+	FVector Start = FollowCamera->GetComponentLocation();
+	FVector End = Start + FollowCamera->GetForwardVector() * 900.f;
+
+	FHitResult Hit;
+	FCollisionQueryParams Params;
+	Params.AddIgnoredActor(this);
+
+	if (GetWorld()->LineTraceSingleByChannel(Hit, Start, End, ECC_Visibility, Params))
+	{
+
+		if (AACipherPuzzleActor* Puzzle = Cast<AACipherPuzzleActor>(Hit.GetActor()))
+		{
+			Puzzle->ActivatePuzzle();
+		}
+	}
+
 }

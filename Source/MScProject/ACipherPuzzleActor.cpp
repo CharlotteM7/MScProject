@@ -13,12 +13,7 @@ AACipherPuzzleActor::AACipherPuzzleActor()
 void AACipherPuzzleActor::BeginPlay()
 {
 	Super::BeginPlay();
-
-	if (CipherWidgetClass)
-	{
-		CipherWidgetInstance = CreateWidget<UUserWidget>(GetWorld(), CipherWidgetClass);
-	}
-    ActivatePuzzle();
+   
 }
 
 void AACipherPuzzleActor::ActivatePuzzle()
@@ -28,34 +23,31 @@ void AACipherPuzzleActor::ActivatePuzzle()
         CipherWidgetInstance = CreateWidget<UUserWidget>(GetWorld(), CipherWidgetClass);
     }
 
-    if (CipherWidgetInstance && !CipherWidgetInstance->IsInViewport())
+    if (!CipherWidgetInstance || CipherWidgetInstance->IsInViewport()) return;
+
+    // Send puzzle reference to widget
+    UFunction* SetOwnerFunc = CipherWidgetInstance->FindFunction(FName("PuzzleActor"));
+    if (SetOwnerFunc)
     {
-        UFunction* SetOwnerFunc = CipherWidgetInstance->FindFunction(FName("PuzzleActor"));
-        if (SetOwnerFunc)
-        {
-            struct FSetOwnerParams
-            {
-                AActor* PuzzleRef;
-            };
-
-            FSetOwnerParams Params;
-            Params.PuzzleRef = this;
-            CipherWidgetInstance->ProcessEvent(SetOwnerFunc, &Params);
-        }
-
-        CipherWidgetInstance->AddToViewport();
+        struct FSetOwnerParams { AActor* PuzzleRef; };
+        FSetOwnerParams Params;
+        Params.PuzzleRef = this;
+        CipherWidgetInstance->ProcessEvent(SetOwnerFunc, &Params);
     }
 
+    // Set the encoded message
     UFunction* SetEncodedFunc = CipherWidgetInstance->FindFunction(FName("EncryptedMessage"));
     if (SetEncodedFunc)
     {
         struct FEncodedParams { FText Message; };
         FEncodedParams Params;
-        Params.Message = FText::FromString(EncodedMessage); // Convert FString to FText
+        Params.Message = FText::FromString(EncodedMessage);
         CipherWidgetInstance->ProcessEvent(SetEncodedFunc, &Params);
     }
 
+    CipherWidgetInstance->AddToViewport();
 }
+
 
 
 
@@ -69,7 +61,7 @@ void AACipherPuzzleActor::SubmitSolution(const FString& PlayerInput)
     {
         bIsSolved = true;
         Feedback = FText::FromString("Correct!");
-        OnPuzzleSolved(); // Optional: Do more stuff here
+        CipherWidgetInstance->RemoveFromParent();
     }
     else
     {
@@ -91,6 +83,4 @@ void AACipherPuzzleActor::SubmitSolution(const FString& PlayerInput)
         CipherWidgetInstance->ProcessEvent(FeedbackFunc, &Params);
     }
 }
-
-
 
