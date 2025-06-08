@@ -46,10 +46,21 @@ void AACipherPuzzleActor::ActivatePuzzle()
     }
 
     CipherWidgetInstance->AddToViewport();
+
+    if (APlayerController* PC = GetWorld()->GetFirstPlayerController())
+    {
+        // Show mouse cursor
+        PC->bShowMouseCursor = true;
+
+        // Set input to UI-only
+        FInputModeUIOnly InputMode;
+        InputMode.SetWidgetToFocus(CipherWidgetInstance->TakeWidget()); // set focus to widget
+        InputMode.SetLockMouseToViewportBehavior(EMouseLockMode::DoNotLock);
+
+        PC->SetInputMode(InputMode);
+    }
+
 }
-
-
-
 
 void AACipherPuzzleActor::SubmitSolution(const FString& PlayerInput)
 {
@@ -62,6 +73,13 @@ void AACipherPuzzleActor::SubmitSolution(const FString& PlayerInput)
         bIsSolved = true;
         Feedback = FText::FromString("Correct!");
         CipherWidgetInstance->RemoveFromParent();
+        if (APlayerController* PC = GetWorld()->GetFirstPlayerController())
+        {
+            PC->bShowMouseCursor = false;
+
+            FInputModeGameOnly InputMode;
+            PC->SetInputMode(InputMode);
+        }
     }
     else
     {
@@ -82,5 +100,23 @@ void AACipherPuzzleActor::SubmitSolution(const FString& PlayerInput)
 
         CipherWidgetInstance->ProcessEvent(FeedbackFunc, &Params);
     }
+
+
 }
 
+void AACipherPuzzleActor::ExitPuzzle()
+{
+    if (APlayerController* PC = GetWorld()->GetFirstPlayerController())
+    {
+        PC->bShowMouseCursor = false;
+        PC->SetInputMode(FInputModeGameOnly());
+
+        if (ULocalPlayer* LP = PC->GetLocalPlayer())
+        {
+            if (UEnhancedInputLocalPlayerSubsystem* Subsystem = ULocalPlayer::GetSubsystem<UEnhancedInputLocalPlayerSubsystem>(LP))
+            {
+                Subsystem->AddMappingContext(DefaultMappingContext, 0); 
+            }
+        }
+    }
+}

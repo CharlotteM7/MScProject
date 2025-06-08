@@ -4,6 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
+#include "EnhancedInputSubsystems.h"
 #include "ACipherPuzzleActor.generated.h"
 
 class UWidgetComponent;
@@ -27,6 +28,9 @@ public:
 	UPROPERTY(EditAnywhere, Category = "Cipher")
 	TSubclassOf<UUserWidget> CipherWidgetClass;
 
+	UPROPERTY(EditDefaultsOnly, Category = "Input")
+	UInputMappingContext* DefaultMappingContext;
+
 	UPROPERTY()
 	UUserWidget* CipherWidgetInstance;
 
@@ -45,6 +49,9 @@ public:
 
 	UFUNCTION(BlueprintCallable, Category = "Cipher")
 	void SubmitSolution(const FString& PlayerInput);
+	
+	UFUNCTION(BlueprintCallable, Category = "Cipher")
+	void ExitPuzzle();
 
 	UFUNCTION(BlueprintImplementableEvent, Category = "Cipher")
 	void OnPuzzleSolved();

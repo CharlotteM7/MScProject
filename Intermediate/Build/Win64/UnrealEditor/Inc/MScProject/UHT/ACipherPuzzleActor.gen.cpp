@@ -12,6 +12,7 @@ void EmptyLinkFunctionForGeneratedCodeACipherPuzzleActor() {}
 // Begin Cross Module References
 COREUOBJECT_API UClass* Z_Construct_UClass_UClass();
 ENGINE_API UClass* Z_Construct_UClass_AActor();
+ENHANCEDINPUT_API UClass* Z_Construct_UClass_UInputMappingContext_NoRegister();
 MSCPROJECT_API UClass* Z_Construct_UClass_AACipherPuzzleActor();
 MSCPROJECT_API UClass* Z_Construct_UClass_AACipherPuzzleActor_NoRegister();
 UMG_API UClass* Z_Construct_UClass_UUserWidget_NoRegister();
@@ -47,6 +48,36 @@ DEFINE_FUNCTION(AACipherPuzzleActor::execActivatePuzzle)
 	P_NATIVE_END;
 }
 // End Class AACipherPuzzleActor Function ActivatePuzzle
+
+// Begin Class AACipherPuzzleActor Function ExitPuzzle
+struct Z_Construct_UFunction_AACipherPuzzleActor_ExitPuzzle_Statics
+{
+#if WITH_METADATA
+	static constexpr UECodeGen_Private::FMetaDataPairParam Function_MetaDataParams[] = {
+		{ "Category", "Cipher" },
+		{ "ModuleRelativePath", "ACipherPuzzleActor.h" },
+	};
+#endif // WITH_METADATA
+	static const UECodeGen_Private::FFunctionParams FuncParams;
+};
+const UECodeGen_Private::FFunctionParams Z_Construct_UFunction_AACipherPuzzleActor_ExitPuzzle_Statics::FuncParams = { (UObject*(*)())Z_Construct_UClass_AACipherPuzzleActor, nullptr, "ExitPuzzle", nullptr, nullptr, nullptr, 0, 0, RF_Public|RF_Transient|RF_MarkAsNative, (EFunctionFlags)0x04020401, 0, 0, METADATA_PARAMS(UE_ARRAY_COUNT(Z_Construct_UFunction_AACipherPuzzleActor_ExitPuzzle_Statics::Function_MetaDataParams), Z_Construct_UFunction_AACipherPuzzleActor_ExitPuzzle_Statics::Function_MetaDataParams) };
+UFunction* Z_Construct_UFunction_AACipherPuzzleActor_ExitPuzzle()
+{
+	static UFunction* ReturnFunction = nullptr;
+	if (!ReturnFunction)
+	{
+		UECodeGen_Private::ConstructUFunction(&ReturnFunction, Z_Construct_UFunction_AACipherPuzzleActor_ExitPuzzle_Statics::FuncParams);
+	}
+	return ReturnFunction;
+}
+DEFINE_FUNCTION(AACipherPuzzleActor::execExitPuzzle)
+{
+	P_FINISH;
+	P_NATIVE_BEGIN;
+	P_THIS->ExitPuzzle();
+	P_NATIVE_END;
+}
+// End Class AACipherPuzzleActor Function ExitPuzzle
 
 // Begin Class AACipherPuzzleActor Function OnPuzzleSolved
 static const FName NAME_AACipherPuzzleActor_OnPuzzleSolved = FName(TEXT("OnPuzzleSolved"));
@@ -129,6 +160,7 @@ void AACipherPuzzleActor::StaticRegisterNativesAACipherPuzzleActor()
 	UClass* Class = AACipherPuzzleActor::StaticClass();
 	static const FNameNativePtrPair Funcs[] = {
 		{ "ActivatePuzzle", &AACipherPuzzleActor::execActivatePuzzle },
+		{ "ExitPuzzle", &AACipherPuzzleActor::execExitPuzzle },
 		{ "SubmitSolution", &AACipherPuzzleActor::execSubmitSolution },
 	};
 	FNativeFunctionRegistrar::RegisterFunctions(Class, Funcs, UE_ARRAY_COUNT(Funcs));
@@ -157,6 +189,10 @@ struct Z_Construct_UClass_AACipherPuzzleActor_Statics
 		{ "Category", "Cipher" },
 		{ "ModuleRelativePath", "ACipherPuzzleActor.h" },
 	};
+	static constexpr UECodeGen_Private::FMetaDataPairParam NewProp_DefaultMappingContext_MetaData[] = {
+		{ "Category", "Input" },
+		{ "ModuleRelativePath", "ACipherPuzzleActor.h" },
+	};
 	static constexpr UECodeGen_Private::FMetaDataPairParam NewProp_CipherWidgetInstance_MetaData[] = {
 		{ "EditInline", "true" },
 		{ "ModuleRelativePath", "ACipherPuzzleActor.h" },
@@ -168,6 +204,7 @@ struct Z_Construct_UClass_AACipherPuzzleActor_Statics
 	static const UECodeGen_Private::FStrPropertyParams NewProp_EncodedMessage;
 	static const UECodeGen_Private::FStrPropertyParams NewProp_CorrectSolution;
 	static const UECodeGen_Private::FClassPropertyParams NewProp_CipherWidgetClass;
+	static const UECodeGen_Private::FObjectPropertyParams NewProp_DefaultMappingContext;
 	static const UECodeGen_Private::FObjectPropertyParams NewProp_CipherWidgetInstance;
 	static void NewProp_bIsSolved_SetBit(void* Obj);
 	static const UECodeGen_Private::FBoolPropertyParams NewProp_bIsSolved;
@@ -175,6 +212,7 @@ struct Z_Construct_UClass_AACipherPuzzleActor_Statics
 	static UObject* (*const DependentSingletons[])();
 	static constexpr FClassFunctionLinkInfo FuncInfo[] = {
 		{ &Z_Construct_UFunction_AACipherPuzzleActor_ActivatePuzzle, "ActivatePuzzle" }, // 303699984
+		{ &Z_Construct_UFunction_AACipherPuzzleActor_ExitPuzzle, "ExitPuzzle" }, // 224126483
 		{ &Z_Construct_UFunction_AACipherPuzzleActor_OnPuzzleSolved, "OnPuzzleSolved" }, // 551083540
 		{ &Z_Construct_UFunction_AACipherPuzzleActor_SubmitSolution, "SubmitSolution" }, // 1305035887
 	};
@@ -187,6 +225,7 @@ struct Z_Construct_UClass_AACipherPuzzleActor_Statics
 const UECodeGen_Private::FStrPropertyParams Z_Construct_UClass_AACipherPuzzleActor_Statics::NewProp_EncodedMessage = { "EncodedMessage", nullptr, (EPropertyFlags)0x0010000000000001, UECodeGen_Private::EPropertyGenFlags::Str, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(AACipherPuzzleActor, EncodedMessage), METADATA_PARAMS(UE_ARRAY_COUNT(NewProp_EncodedMessage_MetaData), NewProp_EncodedMessage_MetaData) };
 const UECodeGen_Private::FStrPropertyParams Z_Construct_UClass_AACipherPuzzleActor_Statics::NewProp_CorrectSolution = { "CorrectSolution", nullptr, (EPropertyFlags)0x0010000000000001, UECodeGen_Private::EPropertyGenFlags::Str, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(AACipherPuzzleActor, CorrectSolution), METADATA_PARAMS(UE_ARRAY_COUNT(NewProp_CorrectSolution_MetaData), NewProp_CorrectSolution_MetaData) };
 const UECodeGen_Private::FClassPropertyParams Z_Construct_UClass_AACipherPuzzleActor_Statics::NewProp_CipherWidgetClass = { "CipherWidgetClass", nullptr, (EPropertyFlags)0x0014000000000001, UECodeGen_Private::EPropertyGenFlags::Class, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(AACipherPuzzleActor, CipherWidgetClass), Z_Construct_UClass_UClass, Z_Construct_UClass_UUserWidget_NoRegister, METADATA_PARAMS(UE_ARRAY_COUNT(NewProp_CipherWidgetClass_MetaData), NewProp_CipherWidgetClass_MetaData) };
+const UECodeGen_Private::FObjectPropertyParams Z_Construct_UClass_AACipherPuzzleActor_Statics::NewProp_DefaultMappingContext = { "DefaultMappingContext", nullptr, (EPropertyFlags)0x0010000000010001, UECodeGen_Private::EPropertyGenFlags::Object, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(AACipherPuzzleActor, DefaultMappingContext), Z_Construct_UClass_UInputMappingContext_NoRegister, METADATA_PARAMS(UE_ARRAY_COUNT(NewProp_DefaultMappingContext_MetaData), NewProp_DefaultMappingContext_MetaData) };
 const UECodeGen_Private::FObjectPropertyParams Z_Construct_UClass_AACipherPuzzleActor_Statics::NewProp_CipherWidgetInstance = { "CipherWidgetInstance", nullptr, (EPropertyFlags)0x0010000000080008, UECodeGen_Private::EPropertyGenFlags::Object, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(AACipherPuzzleActor, CipherWidgetInstance), Z_Construct_UClass_UUserWidget_NoRegister, METADATA_PARAMS(UE_ARRAY_COUNT(NewProp_CipherWidgetInstance_MetaData), NewProp_CipherWidgetInstance_MetaData) };
 void Z_Construct_UClass_AACipherPuzzleActor_Statics::NewProp_bIsSolved_SetBit(void* Obj)
 {
@@ -197,6 +236,7 @@ const UECodeGen_Private::FPropertyParamsBase* const Z_Construct_UClass_AACipherP
 	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_AACipherPuzzleActor_Statics::NewProp_EncodedMessage,
 	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_AACipherPuzzleActor_Statics::NewProp_CorrectSolution,
 	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_AACipherPuzzleActor_Statics::NewProp_CipherWidgetClass,
+	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_AACipherPuzzleActor_Statics::NewProp_DefaultMappingContext,
 	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_AACipherPuzzleActor_Statics::NewProp_CipherWidgetInstance,
 	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_AACipherPuzzleActor_Statics::NewProp_bIsSolved,
 };
@@ -241,10 +281,10 @@ AACipherPuzzleActor::~AACipherPuzzleActor() {}
 struct Z_CompiledInDeferFile_FID_Masters_MScProject_Source_MScProject_ACipherPuzzleActor_h_Statics
 {
 	static constexpr FClassRegisterCompiledInInfo ClassInfo[] = {
-		{ Z_Construct_UClass_AACipherPuzzleActor, AACipherPuzzleActor::StaticClass, TEXT("AACipherPuzzleActor"), &Z_Registration_Info_UClass_AACipherPuzzleActor, CONSTRUCT_RELOAD_VERSION_INFO(FClassReloadVersionInfo, sizeof(AACipherPuzzleActor), 4158584681U) },
+		{ Z_Construct_UClass_AACipherPuzzleActor, AACipherPuzzleActor::StaticClass, TEXT("AACipherPuzzleActor"), &Z_Registration_Info_UClass_AACipherPuzzleActor, CONSTRUCT_RELOAD_VERSION_INFO(FClassReloadVersionInfo, sizeof(AACipherPuzzleActor), 2439109077U) },
 	};
 };
-static FRegisterCompiledInInfo Z_CompiledInDeferFile_FID_Masters_MScProject_Source_MScProject_ACipherPuzzleActor_h_1843752162(TEXT("/Script/MScProject"),
+static FRegisterCompiledInInfo Z_CompiledInDeferFile_FID_Masters_MScProject_Source_MScProject_ACipherPuzzleActor_h_1932710135(TEXT("/Script/MScProject"),
 	Z_CompiledInDeferFile_FID_Masters_MScProject_Source_MScProject_ACipherPuzzleActor_h_Statics::ClassInfo, UE_ARRAY_COUNT(Z_CompiledInDeferFile_FID_Masters_MScProject_Source_MScProject_ACipherPuzzleActor_h_Statics::ClassInfo),
 	nullptr, 0,
 	nullptr, 0);
