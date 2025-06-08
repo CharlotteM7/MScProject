@@ -11,6 +11,8 @@
     <None Include="..\..\Source\MScProjectEditor.Target.cs">
       <Filter>Source</Filter>
     </None>
+    <None Include="..\..\.gitattributes" />
+    <None Include="..\..\.gitignore" />
     <None Include="..\..\.vsconfig" />
     <Filter Include="Config">
       <UniqueIdentifier>{FA535FFB-25E1-3D20-B416-52F9BE21E06E}</UniqueIdentifier>
@@ -33,6 +35,12 @@
     <Filter Include="Source\MScProject">
       <UniqueIdentifier>{55566703-10DC-3491-9894-73A2C4B452EA}</UniqueIdentifier>
     </Filter>
+    <ClCompile Include="..\..\Source\MScProject\ACipherPuzzleActor.cpp">
+      <Filter>Source\MScProject</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\MScProject\ACipherPuzzleActor.h">
+      <Filter>Source\MScProject</Filter>
+    </ClCompile>
     <None Include="..\..\Source\MScProject\MScProject.Build.cs">
       <Filter>Source\MScProject</Filter>
     </None>
