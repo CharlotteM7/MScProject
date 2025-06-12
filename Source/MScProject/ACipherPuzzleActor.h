@@ -10,6 +10,8 @@
 class UWidgetComponent;
 class UUserWidget;
 
+DECLARE_DYNAMIC_MULTICAST_DELEGATE(FOnPuzzleSolved);
+
 UCLASS()
 class MSCPROJECT_API AACipherPuzzleActor : public AActor
 {
@@ -28,6 +30,9 @@ public:
 	UPROPERTY(EditAnywhere, Category = "Cipher")
 	TSubclassOf<UUserWidget> CipherWidgetClass;
 
+	UPROPERTY(BlueprintAssignable, Category = "Cipher")
+	FOnPuzzleSolved OnSolved;
+
 	UPROPERTY(EditDefaultsOnly, Category = "Input")
 	UInputMappingContext* DefaultMappingContext;
 
@@ -45,7 +50,7 @@ protected:
 
 public:	
 	UFUNCTION(BlueprintCallable, Category = "Cipher")
-	void ActivatePuzzle();
+	virtual void ActivatePuzzle();
 
 	UFUNCTION(BlueprintCallable, Category = "Cipher")
 	void SubmitSolution(const FString& PlayerInput);
@@ -53,7 +58,5 @@ public:
 	UFUNCTION(BlueprintCallable, Category = "Cipher")
 	void ExitPuzzle();
 
-	UFUNCTION(BlueprintImplementableEvent, Category = "Cipher")
-	void OnPuzzleSolved();
 
 };

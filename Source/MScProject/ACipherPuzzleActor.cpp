@@ -80,6 +80,9 @@ void AACipherPuzzleActor::SubmitSolution(const FString& PlayerInput)
             FInputModeGameOnly InputMode;
             PC->SetInputMode(InputMode);
         }
+
+        OnSolved.Broadcast();
+
     }
     else
     {
