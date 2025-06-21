@@ -6,6 +6,8 @@
 #include "GameFramework/Character.h"
 #include "ACipherPuzzleActor.h"
 #include "Logging/LogMacros.h"
+#include "Blueprint/UserWidget.h"
+#include "Blueprint/WidgetLayoutLibrary.h"
 #include "MScProjectCharacter.generated.h"
 
 class USpringArmComponent;
@@ -49,6 +51,16 @@ class AMScProjectCharacter : public ACharacter
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Input, meta = (AllowPrivateAccess = "true"))
 	UInputAction* InteractAction;
 
+	/** View Notebook Input Action */
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Input, meta = (AllowPrivateAccess = "true"))
+	UInputAction* ViewAction;
+
+	UPROPERTY(EditAnywhere, Category = "UI")
+	TSubclassOf<UUserWidget> NotebookWidgetClass;
+
+	UUserWidget* NotebookWidgetRef = nullptr;
+
+
 public:
 	AMScProjectCharacter();
 	
@@ -63,6 +75,9 @@ protected:
 
 	/** Called for Interact input */
 	void Interact(const FInputActionValue& Value);
+
+	/** Called for View input */
+	void View(const FInputActionValue& Value);
 			
 
 protected:
