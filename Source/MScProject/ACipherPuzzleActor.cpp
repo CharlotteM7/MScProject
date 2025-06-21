@@ -9,21 +9,21 @@
 // Sets default values
 AACipherPuzzleActor::AACipherPuzzleActor()
 {
- 	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
-	PrimaryActorTick.bCanEverTick = false;
+    // Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
+    PrimaryActorTick.bCanEverTick = false;
 
 }
 
 // Called when the game starts or when spawned
 void AACipherPuzzleActor::BeginPlay()
 {
-	Super::BeginPlay();
-   
+    Super::BeginPlay();
+
 }
 
 void AACipherPuzzleActor::ActivatePuzzle()
 {
-   
+
     if (bIsSolved || bPuzzleUIActive)
     {
         UE_LOG(LogTemp, Warning, TEXT("ActivatePuzzle skipped: already solved or UI already active"));
@@ -45,9 +45,9 @@ void AACipherPuzzleActor::ActivatePuzzle()
 
     if (CipherWidgetInstance->IsInViewport()) return;
 
-    // Send puzzle reference to widget
-    UFunction* SetOwnerFunc = CipherWidgetInstance->FindFunction(FName("PuzzleActor"));
-    if (SetOwnerFunc)
+
+    // Set puzzle actor on the widget
+    if (UFunction* SetOwnerFunc = CipherWidgetInstance->FindFunction(FName("PuzzleActor")))
     {
         struct FSetOwnerParams { AActor* PuzzleRef; };
         FSetOwnerParams Params;
@@ -89,6 +89,8 @@ void AACipherPuzzleActor::ActivatePuzzle()
         InputMode.SetLockMouseToViewportBehavior(EMouseLockMode::DoNotLock);
         PC->SetInputMode(InputMode);
     }
+}
+
 
 
 
@@ -101,13 +103,26 @@ void AACipherPuzzleActor::SubmitSolution(const FString& PlayerInput)
 
     FText Feedback;
 
-    const bool bIsCorrect = PlayerInput.Equals(CorrectSolution, ESearchCase::IgnoreCase);
-
-    if (bIsCorrect)
+    if (PlayerInput.Equals(CorrectSolution, ESearchCase::IgnoreCase))
     {
         bIsSolved = true;
         Feedback = FText::FromString("Correct!");
-        CipherWidgetInstance->RemoveFromParent();
+
+        // Destroy puzzle actor target (e.g. door)
+        if (ActorToDestroy)
+        {
+            ActorToDestroy->Destroy();
+        }
+
+        // Cleanup notebook container
+        if (ActiveContainerWidget && ActiveContainerWidget->IsInViewport())
+        {
+            UE_LOG(LogTemp, Warning, TEXT("Removing container: %s"), *ActiveContainerWidget->GetName());
+            ActiveContainerWidget->RemoveFromParent();
+            ActiveContainerWidget = nullptr;
+        }
+
+        // Restore input
         if (APlayerController* PC = GetWorld()->GetFirstPlayerController())
         {
             PC->bShowMouseCursor = false;
@@ -122,19 +137,28 @@ void AACipherPuzzleActor::SubmitSolution(const FString& PlayerInput)
         Feedback = FText::FromString("Try again.");
     }
 
-    UFunction* FeedbackFunc = CipherWidgetInstance->FindFunction(FName("ShowFeedbackMessage"));
-    if (FeedbackFunc)
+    // Show feedback in UI
+    if (UFunction* FeedbackFunc = CipherWidgetInstance->FindFunction(FName("ShowFeedbackMessage")))
     {
         struct FFeedbackParams { FText Feedback; };
         FFeedbackParams Params;
         Params.Feedback = Feedback;
-       
-
         CipherWidgetInstance->ProcessEvent(FeedbackFunc, &Params);
     }
-
-
 }
+
+
+
+
+void AACipherPuzzleActor::ExitPuzzle()
+{
+    // Remove notebook container
+    if (ActiveContainerWidget && ActiveContainerWidget->IsInViewport())
+    {
+        UE_LOG(LogTemp, Warning, TEXT("Exiting puzzle. Removing container: %s"), *ActiveContainerWidget->GetName());
+        ActiveContainerWidget->RemoveFromParent();
+        ActiveContainerWidget = nullptr;
+    }
 
     // Remove puzzle widget if still around
     if (CipherWidgetInstance && CipherWidgetInstance->IsInViewport())
@@ -162,4 +186,3 @@ void AACipherPuzzleActor::SubmitSolution(const FString& PlayerInput)
 
 
 }
-

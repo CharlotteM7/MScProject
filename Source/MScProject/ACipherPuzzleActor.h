@@ -22,8 +22,8 @@ UCLASS()
 class MSCPROJECT_API AACipherPuzzleActor : public AActor
 {
 	GENERATED_BODY()
-	
-public:	
+
+public:
 	// Sets default values for this actor's properties
 	AACipherPuzzleActor();
 
@@ -48,6 +48,12 @@ public:
 	UPROPERTY()
 	UUserWidget* CipherWidgetInstance;
 
+	UPROPERTY(EditAnywhere, Category = "Cipher")
+	TSubclassOf<UUserWidget> NotebookContainerClass;
+
+	UPROPERTY()
+	UUserWidget* ActiveContainerWidget;
+
 	UPROPERTY()
 	bool bIsSolved;
 
@@ -61,13 +67,13 @@ protected:
 
 
 
-public:	
+public:
 	UFUNCTION(BlueprintCallable, Category = "Cipher")
 	virtual void ActivatePuzzle();
 
 	UFUNCTION(BlueprintCallable, Category = "Cipher")
 	void SubmitSolution(const FString& PlayerInput);
-	
+
 	UFUNCTION(BlueprintCallable, Category = "Cipher")
 	void ExitPuzzle();
 
