@@ -14,17 +14,17 @@ PRAGMA_DISABLE_DEPRECATION_WARNINGS
 #endif
 #define MSCPROJECT_ACipherPuzzleActor_generated_h
 
-#define FID_Masters_MScProject_Source_MScProject_ACipherPuzzleActor_h_13_DELEGATE \
+#define FID_Masters_MScProject_Source_MScProject_ACipherPuzzleActor_h_19_DELEGATE \
 MSCPROJECT_API void FOnPuzzleSolved_DelegateWrapper(const FMulticastScriptDelegate& OnPuzzleSolved);
 
 
-#define FID_Masters_MScProject_Source_MScProject_ACipherPuzzleActor_h_18_RPC_WRAPPERS_NO_PURE_DECLS \
+#define FID_Masters_MScProject_Source_MScProject_ACipherPuzzleActor_h_24_RPC_WRAPPERS_NO_PURE_DECLS \
 	DECLARE_FUNCTION(execExitPuzzle); \
 	DECLARE_FUNCTION(execSubmitSolution); \
 	DECLARE_FUNCTION(execActivatePuzzle);
 
 
-#define FID_Masters_MScProject_Source_MScProject_ACipherPuzzleActor_h_18_INCLASS_NO_PURE_DECLS \
+#define FID_Masters_MScProject_Source_MScProject_ACipherPuzzleActor_h_24_INCLASS_NO_PURE_DECLS \
 private: \
 	static void StaticRegisterNativesAACipherPuzzleActor(); \
 	friend struct Z_Construct_UClass_AACipherPuzzleActor_Statics; \
@@ -33,7 +33,7 @@ public: \
 	DECLARE_SERIALIZER(AACipherPuzzleActor)
 
 
-#define FID_Masters_MScProject_Source_MScProject_ACipherPuzzleActor_h_18_ENHANCED_CONSTRUCTORS \
+#define FID_Masters_MScProject_Source_MScProject_ACipherPuzzleActor_h_24_ENHANCED_CONSTRUCTORS \
 private: \
 	/** Private move- and copy-constructors, should never be used */ \
 	AACipherPuzzleActor(AACipherPuzzleActor&&); \
@@ -45,13 +45,13 @@ public: \
 	NO_API virtual ~AACipherPuzzleActor();
 
 
-#define FID_Masters_MScProject_Source_MScProject_ACipherPuzzleActor_h_15_PROLOG
-#define FID_Masters_MScProject_Source_MScProject_ACipherPuzzleActor_h_18_GENERATED_BODY \
+#define FID_Masters_MScProject_Source_MScProject_ACipherPuzzleActor_h_21_PROLOG
+#define FID_Masters_MScProject_Source_MScProject_ACipherPuzzleActor_h_24_GENERATED_BODY \
 PRAGMA_DISABLE_DEPRECATION_WARNINGS \
 public: \
-	FID_Masters_MScProject_Source_MScProject_ACipherPuzzleActor_h_18_RPC_WRAPPERS_NO_PURE_DECLS \
-	FID_Masters_MScProject_Source_MScProject_ACipherPuzzleActor_h_18_INCLASS_NO_PURE_DECLS \
-	FID_Masters_MScProject_Source_MScProject_ACipherPuzzleActor_h_18_ENHANCED_CONSTRUCTORS \
+	FID_Masters_MScProject_Source_MScProject_ACipherPuzzleActor_h_24_RPC_WRAPPERS_NO_PURE_DECLS \
+	FID_Masters_MScProject_Source_MScProject_ACipherPuzzleActor_h_24_INCLASS_NO_PURE_DECLS \
+	FID_Masters_MScProject_Source_MScProject_ACipherPuzzleActor_h_24_ENHANCED_CONSTRUCTORS \
 private: \
 PRAGMA_ENABLE_DEPRECATION_WARNINGS
 

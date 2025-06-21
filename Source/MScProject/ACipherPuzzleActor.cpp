@@ -1,6 +1,11 @@
 
 #include "ACipherPuzzleActor.h"
+#include "Components/Overlay.h"
+#include "Components/OverlaySlot.h"
 #include "Blueprint/UserWidget.h"
+#include "Blueprint/WidgetTree.h"
+#include "Kismet/GameplayStatics.h"
+
 // Sets default values
 AACipherPuzzleActor::AACipherPuzzleActor()
 {
@@ -18,12 +23,27 @@ void AACipherPuzzleActor::BeginPlay()
 
 void AACipherPuzzleActor::ActivatePuzzle()
 {
-    if (!CipherWidgetInstance && CipherWidgetClass)
+   
+    if (bIsSolved || bPuzzleUIActive)
     {
-        CipherWidgetInstance = CreateWidget<UUserWidget>(GetWorld(), CipherWidgetClass);
+        UE_LOG(LogTemp, Warning, TEXT("ActivatePuzzle skipped: already solved or UI already active"));
+        return;
     }
 
-    if (!CipherWidgetInstance || CipherWidgetInstance->IsInViewport()) return;
+    bPuzzleUIActive = true; // Mark as active once passed the gate
+
+
+    if (!CipherWidgetInstance)
+    {
+        CipherWidgetInstance = CreateWidget<UUserWidget>(GetWorld(), CipherWidgetClass);
+        if (!CipherWidgetInstance)
+        {
+            UE_LOG(LogTemp, Error, TEXT("Failed to create CipherWidgetInstance!"));
+            return;
+        }
+    }
+
+    if (CipherWidgetInstance->IsInViewport()) return;
 
     // Send puzzle reference to widget
     UFunction* SetOwnerFunc = CipherWidgetInstance->FindFunction(FName("PuzzleActor"));
@@ -35,9 +55,8 @@ void AACipherPuzzleActor::ActivatePuzzle()
         CipherWidgetInstance->ProcessEvent(SetOwnerFunc, &Params);
     }
 
-    // Set the encoded message
-    UFunction* SetEncodedFunc = CipherWidgetInstance->FindFunction(FName("EncryptedMessage"));
-    if (SetEncodedFunc)
+    // Set encoded message
+    if (UFunction* SetEncodedFunc = CipherWidgetInstance->FindFunction(FName("EncryptedMessage")))
     {
         struct FEncodedParams { FText Message; };
         FEncodedParams Params;
@@ -45,30 +64,46 @@ void AACipherPuzzleActor::ActivatePuzzle()
         CipherWidgetInstance->ProcessEvent(SetEncodedFunc, &Params);
     }
 
-    CipherWidgetInstance->AddToViewport();
+    // Create container with notebook
+    UUserWidget* ContainerWidget = CreateWidget<UUserWidget>(GetWorld(), NotebookContainerClass);
+    if (!ContainerWidget) return;
+
+    UOverlay* OverlayPanel = Cast<UOverlay>(ContainerWidget->WidgetTree->FindWidget(FName("Overlay")));
+    if (!OverlayPanel) return;
+
+    if (UOverlaySlot* OverlaySlot = Cast<UOverlaySlot>(OverlayPanel->AddChild(CipherWidgetInstance)))
+    {
+        OverlaySlot->SetHorizontalAlignment(HAlign_Fill);
+        OverlaySlot->SetVerticalAlignment(VAlign_Fill);
+    }
+
+    ActiveContainerWidget = ContainerWidget;
+    ActiveContainerWidget->AddToViewport();
+    UE_LOG(LogTemp, Warning, TEXT("Notebook container created: %s"), *ContainerWidget->GetName());
 
     if (APlayerController* PC = GetWorld()->GetFirstPlayerController())
     {
-        // Show mouse cursor
         PC->bShowMouseCursor = true;
-
-        // Set input to UI-only
         FInputModeUIOnly InputMode;
-        InputMode.SetWidgetToFocus(CipherWidgetInstance->TakeWidget()); // set focus to widget
+        InputMode.SetWidgetToFocus(CipherWidgetInstance->TakeWidget());
         InputMode.SetLockMouseToViewportBehavior(EMouseLockMode::DoNotLock);
-
         PC->SetInputMode(InputMode);
     }
 
-}
+
 
 void AACipherPuzzleActor::SubmitSolution(const FString& PlayerInput)
 {
     if (!CipherWidgetInstance) return;
 
+    UE_LOG(LogTemp, Warning, TEXT("SubmitSolution called"));
+    UE_LOG(LogTemp, Warning, TEXT("Player input: %s | Correct: %s"), *PlayerInput, *CorrectSolution);
+
     FText Feedback;
 
-    if (PlayerInput.Equals(CorrectSolution, ESearchCase::IgnoreCase))
+    const bool bIsCorrect = PlayerInput.Equals(CorrectSolution, ESearchCase::IgnoreCase);
+
+    if (bIsCorrect)
     {
         bIsSolved = true;
         Feedback = FText::FromString("Correct!");
@@ -76,13 +111,11 @@ void AACipherPuzzleActor::SubmitSolution(const FString& PlayerInput)
         if (APlayerController* PC = GetWorld()->GetFirstPlayerController())
         {
             PC->bShowMouseCursor = false;
-
             FInputModeGameOnly InputMode;
             PC->SetInputMode(InputMode);
         }
 
         OnSolved.Broadcast();
-
     }
     else
     {
@@ -92,11 +125,7 @@ void AACipherPuzzleActor::SubmitSolution(const FString& PlayerInput)
     UFunction* FeedbackFunc = CipherWidgetInstance->FindFunction(FName("ShowFeedbackMessage"));
     if (FeedbackFunc)
     {
-        struct FFeedbackParams
-        {
-            FText Feedback;
-        };
-
+        struct FFeedbackParams { FText Feedback; };
         FFeedbackParams Params;
         Params.Feedback = Feedback;
        
@@ -107,8 +136,14 @@ void AACipherPuzzleActor::SubmitSolution(const FString& PlayerInput)
 
 }
 
-void AACipherPuzzleActor::ExitPuzzle()
-{
+    // Remove puzzle widget if still around
+    if (CipherWidgetInstance && CipherWidgetInstance->IsInViewport())
+    {
+        CipherWidgetInstance->RemoveFromParent();
+        CipherWidgetInstance = nullptr;
+    }
+
+    // Restore input and mappings
     if (APlayerController* PC = GetWorld()->GetFirstPlayerController())
     {
         PC->bShowMouseCursor = false;
@@ -118,8 +153,13 @@ void AACipherPuzzleActor::ExitPuzzle()
         {
             if (UEnhancedInputLocalPlayerSubsystem* Subsystem = ULocalPlayer::GetSubsystem<UEnhancedInputLocalPlayerSubsystem>(LP))
             {
-                Subsystem->AddMappingContext(DefaultMappingContext, 0); 
+                Subsystem->AddMappingContext(DefaultMappingContext, 0);
             }
         }
     }
+
+    bPuzzleUIActive = false;
+
+
 }
+

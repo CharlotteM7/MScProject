@@ -3,12 +3,18 @@
 #pragma once
 
 #include "CoreMinimal.h"
+#include "Blueprint/UserWidget.h"
+#include "Kismet/GameplayStatics.h"
 #include "GameFramework/Actor.h"
 #include "EnhancedInputSubsystems.h"
 #include "ACipherPuzzleActor.generated.h"
 
 class UWidgetComponent;
 class UUserWidget;
+class UWBP_PuzzleNotebookContainer;
+class UWBP_CipherPuzzle1;
+class UWBP_LetterPuzzle;
+
 
 DECLARE_DYNAMIC_MULTICAST_DELEGATE(FOnPuzzleSolved);
 
@@ -33,6 +39,9 @@ public:
 	UPROPERTY(BlueprintAssignable, Category = "Cipher")
 	FOnPuzzleSolved OnSolved;
 
+	UPROPERTY(EditAnywhere, Category = "Cipher")
+	AActor* ActorToDestroy;
+
 	UPROPERTY(EditDefaultsOnly, Category = "Input")
 	UInputMappingContext* DefaultMappingContext;
 
@@ -41,6 +50,10 @@ public:
 
 	UPROPERTY()
 	bool bIsSolved;
+
+	UPROPERTY()
+	bool bPuzzleUIActive = false;
+
 
 protected:
 	// Called when the game starts or when spawned

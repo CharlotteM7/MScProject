@@ -10,6 +10,8 @@
 #include "EnhancedInputComponent.h"
 #include "EnhancedInputSubsystems.h"
 #include "InputActionValue.h"
+#include "Blueprint/UserWidget.h"
+#include "Blueprint/WidgetLayoutLibrary.h"
 
 DEFINE_LOG_CATEGORY(LogTemplateCharacter);
 
@@ -86,8 +88,12 @@ void AMScProjectCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInpu
 		// Looking
 		EnhancedInputComponent->BindAction(LookAction, ETriggerEvent::Triggered, this, &AMScProjectCharacter::Look);
 
-		// Looking
+		// Interacting with objects
 		EnhancedInputComponent->BindAction(InteractAction, ETriggerEvent::Triggered, this, &AMScProjectCharacter::Interact);
+
+		// Viewing the notebook
+		EnhancedInputComponent->BindAction(ViewAction, ETriggerEvent::Started, this, &AMScProjectCharacter::View);
+
 	}
 	else
 	{
@@ -151,4 +157,25 @@ void AMScProjectCharacter::Interact(const FInputActionValue& Value)
 		}
 	}
 
+}
+
+void AMScProjectCharacter::View(const FInputActionValue& Value)
+{
+
+	if (NotebookWidgetRef && NotebookWidgetRef->IsInViewport())
+	{
+		NotebookWidgetRef->RemoveFromParent();
+		NotebookWidgetRef = nullptr;
+	}
+	else
+	{
+		if (NotebookWidgetClass)
+		{
+			NotebookWidgetRef = CreateWidget<UUserWidget>(GetWorld(), NotebookWidgetClass);
+			if (NotebookWidgetRef)
+			{
+				NotebookWidgetRef->AddToViewport();
+			}
+		}
+	}
 }

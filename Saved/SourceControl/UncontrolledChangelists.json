@@ -7,7 +7,6 @@
 			"files": [
 				"C:/Masters/MScProject/Content/__ExternalActors__/ThirdPerson/Maps/ThirdPersonMap/1/AZ/A7GPT109Y6ZTTJD4A7TXER.uasset",
 				"C:/Masters/MScProject/Content/ThirdPerson/Maps/ThirdPersonMap.umap",
-				"C:/Masters/MScProject/Content/ThirdPerson/Maps/WorldMap.umap",
 				"C:/Masters/MScProject/Content/LevelPrototyping/WorldMap.umap",
 				"C:/Masters/MScProject/Content/__ExternalActors__/ThirdPerson/Maps/ThirdPersonMap/E/FR/LBG6LPN5JCL3FMVSI2CK6R.uasset",
 				"C:/Masters/MScProject/Content/__ExternalActors__/ThirdPerson/Maps/ThirdPersonMap/D/DE/SWSI13675DVYIZ0N4NF7Y3.uasset",
@@ -33,6 +32,19 @@
 				"C:/Masters/MScProject/Content/Puzzles/WBP_LetterPuzzle.uasset",
 				"C:/Masters/MScProject/Content/Puzzles/BP_LetterPuzzle.uasset",
 				"C:/Masters/MScProject/Content/Puzzles/WBP_CipherPuzzle1.uasset",
+				"C:/Masters/MScProject/Content/LoftOffice/Textures/T_Bricks_a_Mat.uasset",
+				"C:/Masters/MScProject/Content/Courier_New_Bold.uasset",
+				"C:/Masters/MScProject/Content/book.uasset",
+				"C:/Masters/MScProject/Content/Courier_New_Bold_Font.uasset",
+				"C:/Masters/MScProject/Content/Modern_House_V1/Textures/Tiles_2/T_Tiles052_4K_Displacement_Mat.uasset",
+				"C:/Masters/MScProject/Content/Puzzles/BP_GameInstance.uasset",
+				"C:/Masters/MScProject/Content/Puzzles/WBP_Notebook.uasset",
+				"C:/Masters/MScProject/Content/ThirdPerson/Input/Actions/IA_View.uasset",
+				"C:/Masters/MScProject/Content/ThirdPerson/Input/Actions/IA_Interact.uasset",
+				"C:/Masters/MScProject/Content/ThirdPerson/Input/IMC_Default.uasset",
+				"C:/Masters/MScProject/Content/ThirdPerson/Blueprints/BP_ThirdPersonCharacter.uasset",
+				"C:/Masters/MScProject/Content/Puzzles/WBP_PuzzleNotebookContainer.uasset",
+				"C:/Masters/MScProject/Content/ThirdPerson/Maps/WorldMap.umap",
 				"C:/Masters/MScProject/Content/Puzzles/NewWidgetBlueprint.uasset"
 			]
 		}

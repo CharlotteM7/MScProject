@@ -14,7 +14,7 @@ PRAGMA_DISABLE_DEPRECATION_WARNINGS
 #endif
 #define MSCPROJECT_MScProjectCharacter_generated_h
 
-#define FID_Masters_MScProject_Source_MScProject_MScProjectCharacter_h_22_INCLASS_NO_PURE_DECLS \
+#define FID_Masters_MScProject_Source_MScProject_MScProjectCharacter_h_24_INCLASS_NO_PURE_DECLS \
 private: \
 	static void StaticRegisterNativesAMScProjectCharacter(); \
 	friend struct Z_Construct_UClass_AMScProjectCharacter_Statics; \
@@ -23,7 +23,7 @@ public: \
 	DECLARE_SERIALIZER(AMScProjectCharacter)
 
 
-#define FID_Masters_MScProject_Source_MScProject_MScProjectCharacter_h_22_ENHANCED_CONSTRUCTORS \
+#define FID_Masters_MScProject_Source_MScProject_MScProjectCharacter_h_24_ENHANCED_CONSTRUCTORS \
 private: \
 	/** Private move- and copy-constructors, should never be used */ \
 	AMScProjectCharacter(AMScProjectCharacter&&); \
@@ -35,12 +35,12 @@ public: \
 	NO_API virtual ~AMScProjectCharacter();
 
 
-#define FID_Masters_MScProject_Source_MScProject_MScProjectCharacter_h_19_PROLOG
-#define FID_Masters_MScProject_Source_MScProject_MScProjectCharacter_h_22_GENERATED_BODY \
+#define FID_Masters_MScProject_Source_MScProject_MScProjectCharacter_h_21_PROLOG
+#define FID_Masters_MScProject_Source_MScProject_MScProjectCharacter_h_24_GENERATED_BODY \
 PRAGMA_DISABLE_DEPRECATION_WARNINGS \
 public: \
-	FID_Masters_MScProject_Source_MScProject_MScProjectCharacter_h_22_INCLASS_NO_PURE_DECLS \
-	FID_Masters_MScProject_Source_MScProject_MScProjectCharacter_h_22_ENHANCED_CONSTRUCTORS \
+	FID_Masters_MScProject_Source_MScProject_MScProjectCharacter_h_24_INCLASS_NO_PURE_DECLS \
+	FID_Masters_MScProject_Source_MScProject_MScProjectCharacter_h_24_ENHANCED_CONSTRUCTORS \
 private: \
 PRAGMA_ENABLE_DEPRECATION_WARNINGS
 

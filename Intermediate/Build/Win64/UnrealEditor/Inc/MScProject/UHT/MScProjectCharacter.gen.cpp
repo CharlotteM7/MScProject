@@ -10,6 +10,7 @@ PRAGMA_DISABLE_DEPRECATION_WARNINGS
 void EmptyLinkFunctionForGeneratedCodeMScProjectCharacter() {}
 
 // Begin Cross Module References
+COREUOBJECT_API UClass* Z_Construct_UClass_UClass();
 ENGINE_API UClass* Z_Construct_UClass_ACharacter();
 ENGINE_API UClass* Z_Construct_UClass_UCameraComponent_NoRegister();
 ENGINE_API UClass* Z_Construct_UClass_USpringArmComponent_NoRegister();
@@ -17,6 +18,7 @@ ENHANCEDINPUT_API UClass* Z_Construct_UClass_UInputAction_NoRegister();
 ENHANCEDINPUT_API UClass* Z_Construct_UClass_UInputMappingContext_NoRegister();
 MSCPROJECT_API UClass* Z_Construct_UClass_AMScProjectCharacter();
 MSCPROJECT_API UClass* Z_Construct_UClass_AMScProjectCharacter_NoRegister();
+UMG_API UClass* Z_Construct_UClass_UUserWidget_NoRegister();
 UPackage* Z_Construct_UPackage__Script_MScProject();
 // End Cross Module References
 
@@ -116,6 +118,21 @@ struct Z_Construct_UClass_AMScProjectCharacter_Statics
 		{ "ToolTip", "Interact Input Action" },
 #endif
 	};
+	static constexpr UECodeGen_Private::FMetaDataPairParam NewProp_ViewAction_MetaData[] = {
+		{ "AllowPrivateAccess", "true" },
+		{ "Category", "Input" },
+#if !UE_BUILD_SHIPPING
+		{ "Comment", "/** View Notebook Input Action */" },
+#endif
+		{ "ModuleRelativePath", "MScProjectCharacter.h" },
+#if !UE_BUILD_SHIPPING
+		{ "ToolTip", "View Notebook Input Action" },
+#endif
+	};
+	static constexpr UECodeGen_Private::FMetaDataPairParam NewProp_NotebookWidgetClass_MetaData[] = {
+		{ "Category", "UI" },
+		{ "ModuleRelativePath", "MScProjectCharacter.h" },
+	};
 #endif // WITH_METADATA
 	static const UECodeGen_Private::FObjectPropertyParams NewProp_CameraBoom;
 	static const UECodeGen_Private::FObjectPropertyParams NewProp_FollowCamera;
@@ -124,6 +141,8 @@ struct Z_Construct_UClass_AMScProjectCharacter_Statics
 	static const UECodeGen_Private::FObjectPropertyParams NewProp_MoveAction;
 	static const UECodeGen_Private::FObjectPropertyParams NewProp_LookAction;
 	static const UECodeGen_Private::FObjectPropertyParams NewProp_InteractAction;
+	static const UECodeGen_Private::FObjectPropertyParams NewProp_ViewAction;
+	static const UECodeGen_Private::FClassPropertyParams NewProp_NotebookWidgetClass;
 	static const UECodeGen_Private::FPropertyParamsBase* const PropPointers[];
 	static UObject* (*const DependentSingletons[])();
 	static constexpr FCppClassTypeInfoStatic StaticCppClassTypeInfo = {
@@ -138,6 +157,8 @@ const UECodeGen_Private::FObjectPropertyParams Z_Construct_UClass_AMScProjectCha
 const UECodeGen_Private::FObjectPropertyParams Z_Construct_UClass_AMScProjectCharacter_Statics::NewProp_MoveAction = { "MoveAction", nullptr, (EPropertyFlags)0x0040000000000015, UECodeGen_Private::EPropertyGenFlags::Object, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(AMScProjectCharacter, MoveAction), Z_Construct_UClass_UInputAction_NoRegister, METADATA_PARAMS(UE_ARRAY_COUNT(NewProp_MoveAction_MetaData), NewProp_MoveAction_MetaData) };
 const UECodeGen_Private::FObjectPropertyParams Z_Construct_UClass_AMScProjectCharacter_Statics::NewProp_LookAction = { "LookAction", nullptr, (EPropertyFlags)0x0040000000000015, UECodeGen_Private::EPropertyGenFlags::Object, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(AMScProjectCharacter, LookAction), Z_Construct_UClass_UInputAction_NoRegister, METADATA_PARAMS(UE_ARRAY_COUNT(NewProp_LookAction_MetaData), NewProp_LookAction_MetaData) };
 const UECodeGen_Private::FObjectPropertyParams Z_Construct_UClass_AMScProjectCharacter_Statics::NewProp_InteractAction = { "InteractAction", nullptr, (EPropertyFlags)0x0040000000000015, UECodeGen_Private::EPropertyGenFlags::Object, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(AMScProjectCharacter, InteractAction), Z_Construct_UClass_UInputAction_NoRegister, METADATA_PARAMS(UE_ARRAY_COUNT(NewProp_InteractAction_MetaData), NewProp_InteractAction_MetaData) };
+const UECodeGen_Private::FObjectPropertyParams Z_Construct_UClass_AMScProjectCharacter_Statics::NewProp_ViewAction = { "ViewAction", nullptr, (EPropertyFlags)0x0040000000000015, UECodeGen_Private::EPropertyGenFlags::Object, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(AMScProjectCharacter, ViewAction), Z_Construct_UClass_UInputAction_NoRegister, METADATA_PARAMS(UE_ARRAY_COUNT(NewProp_ViewAction_MetaData), NewProp_ViewAction_MetaData) };
+const UECodeGen_Private::FClassPropertyParams Z_Construct_UClass_AMScProjectCharacter_Statics::NewProp_NotebookWidgetClass = { "NotebookWidgetClass", nullptr, (EPropertyFlags)0x0044000000000001, UECodeGen_Private::EPropertyGenFlags::Class, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(AMScProjectCharacter, NotebookWidgetClass), Z_Construct_UClass_UClass, Z_Construct_UClass_UUserWidget_NoRegister, METADATA_PARAMS(UE_ARRAY_COUNT(NewProp_NotebookWidgetClass_MetaData), NewProp_NotebookWidgetClass_MetaData) };
 const UECodeGen_Private::FPropertyParamsBase* const Z_Construct_UClass_AMScProjectCharacter_Statics::PropPointers[] = {
 	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_AMScProjectCharacter_Statics::NewProp_CameraBoom,
 	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_AMScProjectCharacter_Statics::NewProp_FollowCamera,
@@ -146,6 +167,8 @@ const UECodeGen_Private::FPropertyParamsBase* const Z_Construct_UClass_AMScProje
 	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_AMScProjectCharacter_Statics::NewProp_MoveAction,
 	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_AMScProjectCharacter_Statics::NewProp_LookAction,
 	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_AMScProjectCharacter_Statics::NewProp_InteractAction,
+	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_AMScProjectCharacter_Statics::NewProp_ViewAction,
+	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_AMScProjectCharacter_Statics::NewProp_NotebookWidgetClass,
 };
 static_assert(UE_ARRAY_COUNT(Z_Construct_UClass_AMScProjectCharacter_Statics::PropPointers) < 2048);
 UObject* (*const Z_Construct_UClass_AMScProjectCharacter_Statics::DependentSingletons[])() = {
@@ -188,10 +211,10 @@ AMScProjectCharacter::~AMScProjectCharacter() {}
 struct Z_CompiledInDeferFile_FID_Masters_MScProject_Source_MScProject_MScProjectCharacter_h_Statics
 {
 	static constexpr FClassRegisterCompiledInInfo ClassInfo[] = {
-		{ Z_Construct_UClass_AMScProjectCharacter, AMScProjectCharacter::StaticClass, TEXT("AMScProjectCharacter"), &Z_Registration_Info_UClass_AMScProjectCharacter, CONSTRUCT_RELOAD_VERSION_INFO(FClassReloadVersionInfo, sizeof(AMScProjectCharacter), 2366222905U) },
+		{ Z_Construct_UClass_AMScProjectCharacter, AMScProjectCharacter::StaticClass, TEXT("AMScProjectCharacter"), &Z_Registration_Info_UClass_AMScProjectCharacter, CONSTRUCT_RELOAD_VERSION_INFO(FClassReloadVersionInfo, sizeof(AMScProjectCharacter), 869415449U) },
 	};
 };
-static FRegisterCompiledInInfo Z_CompiledInDeferFile_FID_Masters_MScProject_Source_MScProject_MScProjectCharacter_h_419033419(TEXT("/Script/MScProject"),
+static FRegisterCompiledInInfo Z_CompiledInDeferFile_FID_Masters_MScProject_Source_MScProject_MScProjectCharacter_h_3100531728(TEXT("/Script/MScProject"),
 	Z_CompiledInDeferFile_FID_Masters_MScProject_Source_MScProject_MScProjectCharacter_h_Statics::ClassInfo, UE_ARRAY_COUNT(Z_CompiledInDeferFile_FID_Masters_MScProject_Source_MScProject_MScProjectCharacter_h_Statics::ClassInfo),
 	nullptr, 0,
 	nullptr, 0);
