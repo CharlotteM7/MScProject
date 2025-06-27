@@ -15,6 +15,7 @@
     <None Include="..\..\.gitattributes" />
     <None Include="..\..\.gitignore" />
     <None Include="..\..\.vsconfig" />
+    <None Include="..\..\Apartment.png" />
     <None Include="..\..\shadertoolsconfig.json" />
     <Filter Include="Config">
       <UniqueIdentifier>{FA535FFB-25E1-3D20-B416-52F9BE21E06E}</UniqueIdentifier>
@@ -35,6 +36,12 @@
       <Filter>Source\MScProject</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Source\MScProject\ACipherPuzzleActor.h">
+      <Filter>Source\MScProject</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\MScProject\Clue.cpp">
+      <Filter>Source\MScProject</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\MScProject\Clue.h">
       <Filter>Source\MScProject</Filter>
     </ClCompile>
     <None Include="..\..\Source\MScProject\MScProject.Build.cs">
@@ -58,10 +65,13 @@
     <ClCompile Include="..\..\Source\MScProject\MScProjectGameMode.h">
       <Filter>Source\MScProject</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\Source\MScProject\MyCharacter.cpp">
+    <ClCompile Include="..\..\Source\MScProject\Objective.h">
       <Filter>Source\MScProject</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\Source\MScProject\MyCharacter.h">
+    <ClCompile Include="..\..\Source\MScProject\ObjectiveManager.cpp">
+      <Filter>Source\MScProject</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\MScProject\ObjectiveManager.h">
       <Filter>Source\MScProject</Filter>
     </ClCompile>
   </ItemGroup>

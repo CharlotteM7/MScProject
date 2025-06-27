@@ -7,6 +7,7 @@
 #include "Kismet/GameplayStatics.h"
 #include "GameFramework/Actor.h"
 #include "EnhancedInputSubsystems.h"
+#include  "ObjectiveManager.h"
 #include "ACipherPuzzleActor.generated.h"
 
 class UWidgetComponent;
@@ -53,6 +54,12 @@ public:
 
 	UPROPERTY()
 	UUserWidget* ActiveContainerWidget;
+
+	UPROPERTY()
+	UObjectiveManager* ObjectiveManagerRef;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Cipher")
+	int32 ObjectiveIndex;
 
 	UPROPERTY()
 	bool bIsSolved;

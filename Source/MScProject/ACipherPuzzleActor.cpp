@@ -3,6 +3,8 @@
 #include "Components/Overlay.h"
 #include "Components/OverlaySlot.h"
 #include "Blueprint/UserWidget.h"
+#include "GameFramework/Character.h" 
+#include "ObjectiveManager.h"
 #include "Blueprint/WidgetTree.h"
 #include "Kismet/GameplayStatics.h"
 
@@ -18,6 +20,12 @@ AACipherPuzzleActor::AACipherPuzzleActor()
 void AACipherPuzzleActor::BeginPlay()
 {
     Super::BeginPlay();
+    if (ACharacter* PC = UGameplayStatics::GetPlayerCharacter(this, 0))
+    {
+        ObjectiveManagerRef = PC->FindComponentByClass<UObjectiveManager>();
+        if (!ObjectiveManagerRef)
+            UE_LOG(LogTemp, Error, TEXT("No ObjectiveManager on player!"));
+    }
 
 }
 
@@ -129,8 +137,14 @@ void AACipherPuzzleActor::SubmitSolution(const FString& PlayerInput)
             FInputModeGameOnly InputMode;
             PC->SetInputMode(InputMode);
         }
-
+       
         OnSolved.Broadcast();
+
+        if (ObjectiveManagerRef)
+        {
+            ObjectiveManagerRef->NotifyPuzzleSolved(ObjectiveIndex);
+        }
+
     }
     else
     {
