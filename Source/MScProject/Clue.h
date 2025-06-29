@@ -1,38 +1,42 @@
-// Fill out your copyright notice in the Description page of Project Settings.
-
+// Clue.h
 #pragma once
 
 #include "CoreMinimal.h"
+#include "Blueprint/UserWidget.h"
+#include "Kismet/GameplayStatics.h"
 #include "GameFramework/Actor.h"
+#include "EnhancedInputSubsystems.h"
+#include "ObjectiveManager.h"
 #include "Clue.generated.h"
+
+
+class UWidgetComponent;
+class UUserWidget;
+
+
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnClueFound, FName, FoundClueID);
 
 UCLASS()
 class MSCPROJECT_API AClue : public AActor
 {
-	GENERATED_BODY()
-	
-public:	
-	// Sets default values for this actor's properties
-	AClue();
+    GENERATED_BODY()
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Clue")
-	FName ClueID;
+public:
+    AClue();
 
-protected:
-	// Called when the game starts or when spawned
-	virtual void BeginPlay() override;
+    UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Clue")
+    FName ClueID;
 
-    UFUNCTION()
-    void OnOverlapBegin(
-        UPrimitiveComponent* OverlappedComp,
-        AActor* OtherActor,
-        UPrimitiveComponent* OtherComp,
-        int32 OtherBodyIndex,
-        bool bFromSweep,
-        const FHitResult& SweepResult);
+    UPROPERTY(EditAnywhere, Category = "UI")
+    TSubclassOf<UUserWidget> ClueWidgetClass;
 
-    /** Collision component to detect player */
-    UPROPERTY(VisibleAnywhere, Category = "Clue")
-    class UBoxComponent* CollisionVolume;
+    /** This event fires once when the clue is activated */
+    UPROPERTY(BlueprintAssignable, Category = "Clue")
+    FOnClueFound OnClueFound;
 
+    bool bUIActive = false;
+    UUserWidget* ClueWidgetInstance = nullptr;
+
+    UFUNCTION(BlueprintCallable)
+    void ActivateClue();
 };

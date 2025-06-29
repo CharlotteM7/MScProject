@@ -1,54 +1,55 @@
-// Fill out your copyright notice in the Description page of Project Settings.
-
-
+// Clue.cpp
 #include "Clue.h"
-#include "Components/BoxComponent.h"
-#include "GameFramework/Character.h"
-#include "ObjectiveManager.h"
 #include "Kismet/GameplayStatics.h"
+#include "GameFramework/PlayerController.h"
 
-// Sets default values
 AClue::AClue()
 {
     PrimaryActorTick.bCanEverTick = false;
-
-    // Create & configure collision volume
-    CollisionVolume = CreateDefaultSubobject<UBoxComponent>(TEXT("CollisionVolume"));
-    CollisionVolume->InitBoxExtent(FVector(50.f));
-    CollisionVolume->SetCollisionProfileName(TEXT("Trigger"));
-    RootComponent = CollisionVolume;
-
-    // Bind overlap event
-    CollisionVolume->OnComponentBeginOverlap.AddDynamic(this, &AClue::OnOverlapBegin);
 }
 
-// Called when the game starts or when spawned
-void AClue::BeginPlay()
+void AClue::ActivateClue()
 {
-	Super::BeginPlay();
-	
-}
 
-void AClue::OnOverlapBegin(
-    UPrimitiveComponent* OverlappedComp,
-    AActor* OtherActor,
-    UPrimitiveComponent* OtherComp,
-    int32 OtherBodyIndex,
-    bool bFromSweep,
-    const FHitResult& SweepResult)
-{
-    // Only proceed if it’s the player character
-    if (ACharacter* PC = Cast<ACharacter>(OtherActor))
-    {
-        // Find their ObjectiveManager component
-        if (UObjectiveManager* ObjMgr = PC->FindComponentByClass<UObjectiveManager>())
+   
+        UE_LOG(LogTemp, Warning, TEXT("ActivateClue() called on %s; WidgetClass is %s"),
+            *GetName(),
+            ClueWidgetClass
+            ? *ClueWidgetClass->GetName()
+            : TEXT("NULL"));
+
+        if (bUIActive || !ClueWidgetClass)
         {
-            // Tell it we’ve found this clue
-            ObjMgr->NotifyClueFound(ClueID);  // matches Objective.RequiredClueID :contentReference[oaicite:0]{index=0}
-
-            // Optionally destroy or disable the clue so it can’t be re-collected
-            Destroy();
+            UE_LOG(LogTemp, Warning, TEXT(" early-return; bUIActive=%d, widgetClass=%s"),
+                bUIActive,
+                ClueWidgetClass
+                ? TEXT("valid")
+                : TEXT("NULL"));
+            return;
         }
-    }
-}
+   
 
+
+    if (bUIActive || !ClueWidgetClass) return;
+
+    // Show widget & switch to UI input
+    if (!ClueWidgetInstance)
+    {
+        ClueWidgetInstance = CreateWidget<UUserWidget>(GetWorld(), ClueWidgetClass);
+        if (!ClueWidgetInstance) return;
+    }
+    ClueWidgetInstance->AddToViewport();
+    bUIActive = true;
+
+    if (APlayerController* PC = UGameplayStatics::GetPlayerController(this, 0))
+    {
+        PC->bShowMouseCursor = true;
+        FInputModeUIOnly InputMode;
+        InputMode.SetWidgetToFocus(ClueWidgetInstance->TakeWidget());
+        InputMode.SetLockMouseToViewportBehavior(EMouseLockMode::DoNotLock);
+        PC->SetInputMode(InputMode);
+    }
+
+    // **Broadcast the event** so anyone listening (e.g. ObjectiveManager) can react
+    OnClueFound.Broadcast(ClueID);
+}

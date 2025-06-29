@@ -7,7 +7,7 @@
 #include "Kismet/GameplayStatics.h"
 #include "GameFramework/Actor.h"
 #include "EnhancedInputSubsystems.h"
-#include  "ObjectiveManager.h"
+#include "ObjectiveManager.h"
 #include "ACipherPuzzleActor.generated.h"
 
 class UWidgetComponent;

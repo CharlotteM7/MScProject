@@ -8,6 +8,7 @@
 #include "GameFramework/SpringArmComponent.h"
 #include "GameFramework/Controller.h"
 #include "EnhancedInputComponent.h"
+#include "Clue.h"
 #include "EnhancedInputSubsystems.h"
 #include "InputActionValue.h"
 #include "Blueprint/UserWidget.h"
@@ -94,6 +95,9 @@ void AMScProjectCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInpu
 		// Viewing the notebook
 		EnhancedInputComponent->BindAction(ViewAction, ETriggerEvent::Started, this, &AMScProjectCharacter::View);
 
+		// Viewing the pause menu
+		EnhancedInputComponent->BindAction(PauseAction, ETriggerEvent::Started, this, &AMScProjectCharacter::Pause);
+
 	}
 	else
 	{
@@ -142,7 +146,7 @@ void AMScProjectCharacter::Interact(const FInputActionValue& Value)
 	
 	// Trace in front of the player for interactable actors
 	FVector Start = FollowCamera->GetComponentLocation();
-	FVector End = Start + FollowCamera->GetForwardVector() * 900.f;
+	FVector End = Start + FollowCamera->GetForwardVector() * 1900.f;
 
 	FHitResult Hit;
 	FCollisionQueryParams Params;
@@ -150,10 +154,40 @@ void AMScProjectCharacter::Interact(const FInputActionValue& Value)
 
 	if (GetWorld()->LineTraceSingleByChannel(Hit, Start, End, ECC_Visibility, Params))
 	{
+		AActor* HitActor = Hit.GetActor();
+		UE_LOG(LogTemp, Warning, TEXT("Interact trace hit: %s"), HitActor
+			? *HitActor->GetName()
+			: TEXT("nullptr"));
+
+		if (AACipherPuzzleActor* Puzzle = Cast<AACipherPuzzleActor>(HitActor))
+		{
+			UE_LOG(LogTemp, Warning, TEXT(" PuzzleActor branch"));
+			Puzzle->ActivatePuzzle();
+		}
+		else if (AClue* Clue = Cast<AClue>(HitActor))
+		{
+			UE_LOG(LogTemp, Warning, TEXT(" Clue branch"));
+			Clue->ActivateClue();
+		}
+	}
+	else
+	{
+		UE_LOG(LogTemp, Warning, TEXT("Interact trace hit nothing"));
+	}
+
+
+	if (GetWorld()->LineTraceSingleByChannel(Hit, Start, End, ECC_Visibility, Params))
+	{
 
 		if (AACipherPuzzleActor* Puzzle = Cast<AACipherPuzzleActor>(Hit.GetActor()))
 		{
 			Puzzle->ActivatePuzzle();
+		}
+
+		else if (AClue* Clue = Cast<AClue>(Hit.GetActor()))
+		{
+			Clue->ActivateClue();
+			return;
 		}
 	}
 
@@ -175,7 +209,16 @@ void AMScProjectCharacter::View(const FInputActionValue& Value)
 			if (NotebookWidgetRef)
 			{
 				NotebookWidgetRef->AddToViewport();
+				NotebookWidgetRef->SetAnchorsInViewport(FAnchors(0, 0, 1, 1));
+				NotebookWidgetRef->SetAlignmentInViewport(FVector2D(0, 0));
 			}
 		}
 	}
+}
+
+
+
+void AMScProjectCharacter::Pause(const FInputActionValue& Value)
+{
+	
 }

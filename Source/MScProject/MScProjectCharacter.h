@@ -5,6 +5,7 @@
 #include "CoreMinimal.h"
 #include "GameFramework/Character.h"
 #include "ACipherPuzzleActor.h"
+#include "Clue.h"
 #include "Logging/LogMacros.h"
 #include "Blueprint/UserWidget.h"
 #include "Blueprint/WidgetLayoutLibrary.h"
@@ -55,6 +56,10 @@ class AMScProjectCharacter : public ACharacter
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Input, meta = (AllowPrivateAccess = "true"))
 	UInputAction* ViewAction;
 
+	/** View Pause Menu Input Action */
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Input, meta = (AllowPrivateAccess = "true"))
+	UInputAction* PauseAction;
+
 	UPROPERTY(EditAnywhere, Category = "UI")
 	TSubclassOf<UUserWidget> NotebookWidgetClass;
 
@@ -78,6 +83,9 @@ protected:
 
 	/** Called for View input */
 	void View(const FInputActionValue& Value);
+
+	/** Called for Pause input */
+	void Pause(const FInputActionValue& Value);
 			
 
 protected:
