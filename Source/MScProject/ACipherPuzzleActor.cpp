@@ -145,8 +145,7 @@ void AACipherPuzzleActor::SubmitSolution(const FString& PlayerInput)
             ObjectiveManagerRef->NotifyPuzzleSolved(ObjectiveIndex);
         }
 
-    }
-    else
+    } else
     {
         Feedback = FText::FromString("Try again.");
     }
@@ -162,14 +161,11 @@ void AACipherPuzzleActor::SubmitSolution(const FString& PlayerInput)
 }
 
 
-
-
 void AACipherPuzzleActor::ExitPuzzle()
 {
     // Remove notebook container
     if (ActiveContainerWidget && ActiveContainerWidget->IsInViewport())
     {
-        UE_LOG(LogTemp, Warning, TEXT("Exiting puzzle. Removing container: %s"), *ActiveContainerWidget->GetName());
         ActiveContainerWidget->RemoveFromParent();
         ActiveContainerWidget = nullptr;
     }

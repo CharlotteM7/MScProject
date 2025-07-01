@@ -1,7 +1,10 @@
 // Clue.cpp
 #include "Clue.h"
 #include "Kismet/GameplayStatics.h"
+#include "GameFramework/Character.h" 
 #include "GameFramework/PlayerController.h"
+#include "ObjectiveManager.h"
+
 
 AClue::AClue()
 {
@@ -11,25 +14,6 @@ AClue::AClue()
 void AClue::ActivateClue()
 {
 
-   
-        UE_LOG(LogTemp, Warning, TEXT("ActivateClue() called on %s; WidgetClass is %s"),
-            *GetName(),
-            ClueWidgetClass
-            ? *ClueWidgetClass->GetName()
-            : TEXT("NULL"));
-
-        if (bUIActive || !ClueWidgetClass)
-        {
-            UE_LOG(LogTemp, Warning, TEXT(" early-return; bUIActive=%d, widgetClass=%s"),
-                bUIActive,
-                ClueWidgetClass
-                ? TEXT("valid")
-                : TEXT("NULL"));
-            return;
-        }
-   
-
-
     if (bUIActive || !ClueWidgetClass) return;
 
     // Show widget & switch to UI input
@@ -38,6 +22,15 @@ void AClue::ActivateClue()
         ClueWidgetInstance = CreateWidget<UUserWidget>(GetWorld(), ClueWidgetClass);
         if (!ClueWidgetInstance) return;
     }
+
+    if (UFunction* SetOwnerFunc = ClueWidgetInstance->FindFunction(FName("ClueRef")))
+    {
+        struct FSetClueParams { AActor* Clue; };
+        FSetClueParams Params;
+        Params.Clue = this;
+        ClueWidgetInstance->ProcessEvent(SetOwnerFunc, &Params);
+    }
+
     ClueWidgetInstance->AddToViewport();
     bUIActive = true;
 
@@ -52,4 +45,31 @@ void AClue::ActivateClue()
 
     // **Broadcast the event** so anyone listening (e.g. ObjectiveManager) can react
     OnClueFound.Broadcast(ClueID);
+}
+
+void AClue::ExitClue()
+{
+  
+    if (ClueWidgetInstance && ClueWidgetInstance->IsInViewport())
+    {
+        ClueWidgetInstance->RemoveFromParent();
+        ClueWidgetInstance = nullptr;
+    }
+
+    // Restore input and mappings
+    if (APlayerController* PC = GetWorld()->GetFirstPlayerController())
+    {
+        PC->bShowMouseCursor = false;
+        PC->SetInputMode(FInputModeGameOnly());
+
+        if (ULocalPlayer* LP = PC->GetLocalPlayer())
+        {
+            if (UEnhancedInputLocalPlayerSubsystem* Subsystem = ULocalPlayer::GetSubsystem<UEnhancedInputLocalPlayerSubsystem>(LP))
+            {
+                Subsystem->AddMappingContext(DefaultMappingContext, 0);
+            }
+        }
+    }
+    bUIActive = false; 
+
 }

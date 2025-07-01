@@ -8,6 +8,7 @@
 #include "ObjectiveManager.generated.h"
 
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnObjectiveUpdated, int32, NewObjectiveIndex);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnClueFoundSignature, FName, ClueID);
 
 UCLASS( ClassGroup=(Custom), meta=(BlueprintSpawnableComponent) )
 class MSCPROJECT_API UObjectiveManager : public UActorComponent
@@ -16,6 +17,9 @@ class MSCPROJECT_API UObjectiveManager : public UActorComponent
 
 public: 
 	UObjectiveManager();
+
+	UPROPERTY(BlueprintAssignable, Category = "Objectives")
+	FOnClueFoundSignature OnClueFound;
 
 	/** List of all objectives in order */
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
@@ -26,7 +30,7 @@ public:
 	int32 CurrentObjectiveIndex = 0;
 
 	/** Fired whenever we advance or update notes */
-	UPROPERTY(BlueprintAssignable)
+	UPROPERTY(BlueprintAssignable, Category = "Objectives")
 	FOnObjectiveUpdated OnObjectiveUpdated;
 
 	/** Call this when player picks up a clue */

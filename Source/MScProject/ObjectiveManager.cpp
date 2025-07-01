@@ -20,25 +20,27 @@ const FObjective& UObjectiveManager::GetCurrentObjective() const
 
 void UObjectiveManager::NotifyClueFound(FName ClueID)
 {
-    if (!Objectives.IsValidIndex(CurrentObjectiveIndex)) return;
-
-    FObjective& Obj = Objectives[CurrentObjectiveIndex];
-    if (!Obj.bIsComplete && Obj.RequiredClueID == ClueID)
-    {
-        Obj.NotesAfter.Add(FText::FromString(TEXT("You’ve found the clue — head back to the door.")));
-        OnObjectiveUpdated.Broadcast(CurrentObjectiveIndex);
-    }
+    OnClueFound.Broadcast(ClueID);
 }
 
 void UObjectiveManager::NotifyPuzzleSolved(int32 Index)
 {
-    if (!Objectives.IsValidIndex(CurrentObjectiveIndex)) return;
+    // Validate the incoming Index, not the current one
+    if (!Objectives.IsValidIndex(Index))
+        return;
 
-    FObjective& Obj = Objectives[CurrentObjectiveIndex];
-    if (Index == CurrentObjectiveIndex)
+    // If they're telling us the puzzle at 'Index' is solved...
+    FObjective& Obj = Objectives[Index];
+    if (!Obj.bIsComplete)
     {
+        // Mark it done
         Obj.bIsComplete = true;
-        CurrentObjectiveIndex++;
+
+        // Advance the current pointer
+        CurrentObjectiveIndex = FMath::Clamp(Index + 1, 0, Objectives.Num() - 1);
+
+        // Broadcast so the notebook pulls in the next NotesBefore/After
         OnObjectiveUpdated.Broadcast(CurrentObjectiveIndex);
     }
 }
+

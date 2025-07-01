@@ -145,8 +145,9 @@ void AMScProjectCharacter::Interact(const FInputActionValue& Value)
 {
 	
 	// Trace in front of the player for interactable actors
-	FVector Start = FollowCamera->GetComponentLocation();
-	FVector End = Start + FollowCamera->GetForwardVector() * 1900.f;
+	FVector Start = FollowCamera->GetComponentLocation() - FVector(0.f, 0.f, 50.f);
+	FVector Forward = GetActorForwardVector();
+	FVector End = Start + FollowCamera->GetForwardVector() * 2000.f;
 
 	FHitResult Hit;
 	FCollisionQueryParams Params;

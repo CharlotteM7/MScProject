@@ -37,6 +37,12 @@ public:
     bool bUIActive = false;
     UUserWidget* ClueWidgetInstance = nullptr;
 
+    UPROPERTY(EditDefaultsOnly, Category = "Input")
+    UInputMappingContext* DefaultMappingContext;
+
     UFUNCTION(BlueprintCallable)
     void ActivateClue();
+
+    UFUNCTION(BlueprintCallable)
+    void ExitClue();
 };
