@@ -145,13 +145,17 @@ void AMScProjectCharacter::Interact(const FInputActionValue& Value)
 {
 	
 	// Trace in front of the player for interactable actors
-	FVector Start = FollowCamera->GetComponentLocation() - FVector(0.f, 0.f, 50.f);
-	FVector Forward = GetActorForwardVector();
-	FVector End = Start + FollowCamera->GetForwardVector() * 2000.f;
+	FVector CamLoc;
+	FRotator CamRot;
+	GetController<APlayerController>()->GetPlayerViewPoint(CamLoc, CamRot);
+
+	FVector Start = CamLoc;
+	FVector End = CamLoc + CamRot.Vector() * 1000.f;  // 1,000 units out
 
 	FHitResult Hit;
-	FCollisionQueryParams Params;
-	Params.AddIgnoredActor(this);
+	FCollisionQueryParams Params(NAME_None, /*bTraceComplex=*/true, this);
+
+	DrawDebugLine(GetWorld(), Start, End, FColor::Green, /*Persistent=*/false, 1.f);
 
 	if (GetWorld()->LineTraceSingleByChannel(Hit, Start, End, ECC_Visibility, Params))
 	{
@@ -177,42 +181,23 @@ void AMScProjectCharacter::Interact(const FInputActionValue& Value)
 	}
 
 
-	if (GetWorld()->LineTraceSingleByChannel(Hit, Start, End, ECC_Visibility, Params))
-	{
-
-		if (AACipherPuzzleActor* Puzzle = Cast<AACipherPuzzleActor>(Hit.GetActor()))
-		{
-			Puzzle->ActivatePuzzle();
-		}
-
-		else if (AClue* Clue = Cast<AClue>(Hit.GetActor()))
-		{
-			Clue->ActivateClue();
-			return;
-		}
-	}
-
 }
 
 void AMScProjectCharacter::View(const FInputActionValue& Value)
 {
-
 	if (NotebookWidgetRef && NotebookWidgetRef->IsInViewport())
 	{
 		NotebookWidgetRef->RemoveFromParent();
 		NotebookWidgetRef = nullptr;
 	}
-	else
+	else if (NotebookWidgetClass)
 	{
-		if (NotebookWidgetClass)
+		NotebookWidgetRef = CreateWidget<UUserWidget>(GetWorld(), NotebookWidgetClass);
+		if (NotebookWidgetRef)
 		{
-			NotebookWidgetRef = CreateWidget<UUserWidget>(GetWorld(), NotebookWidgetClass);
-			if (NotebookWidgetRef)
-			{
-				NotebookWidgetRef->AddToViewport();
-				NotebookWidgetRef->SetAnchorsInViewport(FAnchors(0, 0, 1, 1));
-				NotebookWidgetRef->SetAlignmentInViewport(FVector2D(0, 0));
-			}
+			NotebookWidgetRef->AddToViewport();
+			NotebookWidgetRef->SetAnchorsInViewport(FAnchors(0, 0, 1, 1));
+			NotebookWidgetRef->SetAlignmentInViewport(FVector2D(0, 0));
 		}
 	}
 }

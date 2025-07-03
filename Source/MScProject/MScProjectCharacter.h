@@ -6,8 +6,9 @@
 #include "GameFramework/Character.h"
 #include "ACipherPuzzleActor.h"
 #include "Clue.h"
-#include "Logging/LogMacros.h"
 #include "Blueprint/UserWidget.h"
+#include "Logging/LogMacros.h"
+#include "UObject/UnrealType.h" 
 #include "Blueprint/WidgetLayoutLibrary.h"
 #include "MScProjectCharacter.generated.h"
 

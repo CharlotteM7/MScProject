@@ -33,6 +33,10 @@ struct MSCPROJECT_API FObjective
 	TArray<FText> NotesAfter;
 
 	/** Whether it’s been completed */
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Objective")
 	bool bIsComplete = false;
+
+	/** Has the player found this objective’s clue yet? */
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Objective")
+	bool bClueFound = false;
 };

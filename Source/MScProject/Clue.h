@@ -34,15 +34,18 @@ public:
     UPROPERTY(BlueprintAssignable, Category = "Clue")
     FOnClueFound OnClueFound;
 
+    UPROPERTY()
     bool bUIActive = false;
-    UUserWidget* ClueWidgetInstance = nullptr;
+
+    UPROPERTY()
+    UUserWidget* ClueWidgetInstance;
 
     UPROPERTY(EditDefaultsOnly, Category = "Input")
     UInputMappingContext* DefaultMappingContext;
 
-    UFUNCTION(BlueprintCallable)
+    UFUNCTION(BlueprintCallable, Category = "Clue")
     void ActivateClue();
 
-    UFUNCTION(BlueprintCallable)
+    UFUNCTION(BlueprintCallable, Category = "Clue")
     void ExitClue();
 };

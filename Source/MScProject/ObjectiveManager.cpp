@@ -2,6 +2,7 @@
 
 
 #include "ObjectiveManager.h"
+#include "Objective.h"
 
 // Sets default values for this component's properties
 UObjectiveManager::UObjectiveManager()
@@ -20,8 +21,14 @@ const FObjective& UObjectiveManager::GetCurrentObjective() const
 
 void UObjectiveManager::NotifyClueFound(FName ClueID)
 {
-    OnClueFound.Broadcast(ClueID);
+    FObjective& Obj = Objectives[CurrentObjectiveIndex];
+    if (!Obj.bIsComplete && Obj.RequiredClueID == ClueID)
+    {
+        Obj.bClueFound = true;                     
+        OnObjectiveUpdated.Broadcast(CurrentObjectiveIndex);
+    }
 }
+
 
 void UObjectiveManager::NotifyPuzzleSolved(int32 Index)
 {

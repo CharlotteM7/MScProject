@@ -44,6 +44,5 @@ public:
 	/** Returns the active objective struct */
 	UFUNCTION(BlueprintPure, Category = "Objectives")
 	const FObjective& GetCurrentObjective() const;
-
 		
 };
