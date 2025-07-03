@@ -6,6 +6,7 @@
 #include "GameFramework/Character.h"
 #include "ACipherPuzzleActor.h"
 #include "Clue.h"
+#include "Kismet/GameplayStatics.h"
 #include "Blueprint/UserWidget.h"
 #include "Logging/LogMacros.h"
 #include "UObject/UnrealType.h" 
@@ -66,12 +67,19 @@ class AMScProjectCharacter : public ACharacter
 
 	UUserWidget* NotebookWidgetRef = nullptr;
 
+	UPROPERTY(EditAnywhere, Category = "UI")
+	TSubclassOf<UUserWidget> MenuWidgetClass;
+
+	UPROPERTY()
+	UUserWidget* MenuWidgetRef = nullptr;
 
 public:
 	AMScProjectCharacter();
 	
 
 protected:
+
+	void BeginPlay();
 
 	/** Called for movement input */
 	void Move(const FInputActionValue& Value);

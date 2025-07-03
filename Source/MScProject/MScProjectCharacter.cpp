@@ -7,6 +7,7 @@
 #include "GameFramework/CharacterMovementComponent.h"
 #include "GameFramework/SpringArmComponent.h"
 #include "GameFramework/Controller.h"
+#include "Kismet/GameplayStatics.h"
 #include "EnhancedInputComponent.h"
 #include "Clue.h"
 #include "EnhancedInputSubsystems.h"
@@ -18,6 +19,33 @@ DEFINE_LOG_CATEGORY(LogTemplateCharacter);
 
 //////////////////////////////////////////////////////////////////////////
 // AMScProjectCharacter
+
+void AMScProjectCharacter::BeginPlay()
+{
+	Super::BeginPlay();
+
+	if (MenuWidgetClass)
+	{
+		// create & show menu
+		MenuWidgetRef = CreateWidget<UUserWidget>(GetWorld(), MenuWidgetClass);
+		if (MenuWidgetRef)
+		{
+			MenuWidgetRef->AddToViewport();
+			// lock controls to UI
+			if (APlayerController* PC = Cast<APlayerController>(Controller))
+			{
+				PC->bShowMouseCursor = true;
+				FInputModeUIOnly Im;
+				Im.SetWidgetToFocus(MenuWidgetRef->TakeWidget());
+				Im.SetLockMouseToViewportBehavior(EMouseLockMode::DoNotLock);
+				PC->SetInputMode(Im);
+			}
+			// actually pause the world
+			UGameplayStatics::SetGamePaused(GetWorld(), true);
+		}
+	}
+}
+
 
 AMScProjectCharacter::AMScProjectCharacter()
 {
@@ -155,8 +183,6 @@ void AMScProjectCharacter::Interact(const FInputActionValue& Value)
 	FHitResult Hit;
 	FCollisionQueryParams Params(NAME_None, /*bTraceComplex=*/true, this);
 
-	DrawDebugLine(GetWorld(), Start, End, FColor::Green, /*Persistent=*/false, 1.f);
-
 	if (GetWorld()->LineTraceSingleByChannel(Hit, Start, End, ECC_Visibility, Params))
 	{
 		AActor* HitActor = Hit.GetActor();
@@ -206,5 +232,34 @@ void AMScProjectCharacter::View(const FInputActionValue& Value)
 
 void AMScProjectCharacter::Pause(const FInputActionValue& Value)
 {
-	
+	if (!MenuWidgetClass) return;
+	const bool bIsPaused = UGameplayStatics::IsGamePaused(GetWorld());
+	APlayerController* PC = Cast<APlayerController>(Controller);
+	if (!PC) return;
+
+	if (bIsPaused)
+	{
+		// Resume
+		if (MenuWidgetRef && MenuWidgetRef->IsInViewport())
+			MenuWidgetRef->RemoveFromParent();
+		PC->bShowMouseCursor = false;
+		PC->SetInputMode(FInputModeGameOnly());
+		UGameplayStatics::SetGamePaused(GetWorld(), false);
+	}
+	else
+	{
+		// Pause
+		if (!MenuWidgetRef)
+			MenuWidgetRef = CreateWidget<UUserWidget>(GetWorld(), MenuWidgetClass);
+		if (MenuWidgetRef)
+		{
+			MenuWidgetRef->AddToViewport();
+			PC->bShowMouseCursor = true;
+			FInputModeUIOnly Im;
+			Im.SetWidgetToFocus(MenuWidgetRef->TakeWidget());
+			Im.SetLockMouseToViewportBehavior(EMouseLockMode::DoNotLock);
+			PC->SetInputMode(Im);
+		}
+		UGameplayStatics::SetGamePaused(GetWorld(), true);
+	}
 }

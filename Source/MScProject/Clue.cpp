@@ -39,6 +39,8 @@ void AClue::ActivateClue()
     }
 
     ClueWidgetInstance->AddToViewport();
+    UGameplayStatics::SetGamePaused(GetWorld(), true);
+
 
     // Switch to UI input mode
     if (APlayerController* PC = UGameplayStatics::GetPlayerController(this, 0))
@@ -98,6 +100,7 @@ void AClue::ExitClue()
             }
         }
     }
+    UGameplayStatics::SetGamePaused(GetWorld(), false);
 
     bUIActive = false;
     UE_LOG(LogTemp, Warning, TEXT("Clue exited"));

@@ -88,6 +88,7 @@ void AACipherPuzzleActor::ActivatePuzzle()
     ActiveContainerWidget = ContainerWidget;
     ActiveContainerWidget->AddToViewport();
     UE_LOG(LogTemp, Warning, TEXT("Notebook container created: %s"), *ContainerWidget->GetName());
+    UGameplayStatics::SetGamePaused(GetWorld(), true);
 
     if (APlayerController* PC = GetWorld()->GetFirstPlayerController())
     {
@@ -128,6 +129,7 @@ void AACipherPuzzleActor::SubmitSolution(const FString& PlayerInput)
             UE_LOG(LogTemp, Warning, TEXT("Removing container: %s"), *ActiveContainerWidget->GetName());
             ActiveContainerWidget->RemoveFromParent();
             ActiveContainerWidget = nullptr;
+            UGameplayStatics::SetGamePaused(GetWorld(), false);
         }
 
         // Restore input
@@ -191,6 +193,7 @@ void AACipherPuzzleActor::ExitPuzzle()
             }
         }
     }
+    UGameplayStatics::SetGamePaused(GetWorld(), false);
 
     bPuzzleUIActive = false;
 
