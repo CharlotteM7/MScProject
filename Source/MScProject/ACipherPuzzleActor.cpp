@@ -72,6 +72,30 @@ void AACipherPuzzleActor::ActivatePuzzle()
         CipherWidgetInstance->ProcessEvent(SetEncodedFunc, &Params);
     }
 
+    // Set correct solution
+    if (FProperty* SolProp = CipherWidgetInstance->GetClass()->FindPropertyByName(FName("CorrectSolution")))
+    {
+        FText SolText = FText::FromString(CorrectSolution);
+        SolProp->SetValue_InContainer(CipherWidgetInstance, &SolText);
+    }
+    else
+    {
+        UE_LOG(LogTemp, Error, TEXT("Could not find CorrectSolution property on widget!"));
+    }
+
+
+    // Set hint message
+    if (FProperty* HintProperty = CipherWidgetInstance->GetClass()->FindPropertyByName(FName("HintMessage")))
+    {
+        FText HintText = FText::FromString(HintMessage);
+        HintProperty->SetValue_InContainer(CipherWidgetInstance, &HintText);
+        UE_LOG(LogTemp, Warning, TEXT("Set HintMessage variable to: %s"), *HintMessage);
+    }
+    else
+    {
+        UE_LOG(LogTemp, Error, TEXT("Could not find HintMessage variable!"));
+    }
+
     // Create container with notebook
     UUserWidget* ContainerWidget = CreateWidget<UUserWidget>(GetWorld(), NotebookContainerClass);
     if (!ContainerWidget) return;
@@ -197,5 +221,19 @@ void AACipherPuzzleActor::ExitPuzzle()
 
     bPuzzleUIActive = false;
 
+
+}
+
+
+void AACipherPuzzleActor::HintPuzzle()
+{
+    // Set hint text on the widget
+    if (UFunction* SetHintFunc = CipherWidgetInstance->FindFunction(FName("HintMessage")))
+    {
+        struct FHintParams { FText Message; };
+        FHintParams HintParams;
+        HintParams.Message = FText::FromString(HintMessage);
+        CipherWidgetInstance->ProcessEvent(SetHintFunc, &HintParams);
+    }
 
 }

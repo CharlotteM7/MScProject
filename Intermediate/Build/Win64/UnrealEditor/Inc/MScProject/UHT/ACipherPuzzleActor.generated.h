@@ -19,6 +19,7 @@ MSCPROJECT_API void FOnPuzzleSolved_DelegateWrapper(const FMulticastScriptDelega
 
 
 #define FID_Masters_MScProject_Source_MScProject_ACipherPuzzleActor_h_25_RPC_WRAPPERS_NO_PURE_DECLS \
+	DECLARE_FUNCTION(execHintPuzzle); \
 	DECLARE_FUNCTION(execExitPuzzle); \
 	DECLARE_FUNCTION(execSubmitSolution); \
 	DECLARE_FUNCTION(execActivatePuzzle);

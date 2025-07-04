@@ -61,6 +61,9 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Cipher")
 	int32 ObjectiveIndex;
 
+	UPROPERTY(EditAnywhere, Category = "Cipher")
+	FString HintMessage;
+
 	UPROPERTY()
 	bool bIsSolved;
 
@@ -83,6 +86,9 @@ public:
 
 	UFUNCTION(BlueprintCallable, Category = "Cipher")
 	void ExitPuzzle();
+
+	UFUNCTION(BlueprintCallable, Category = "Cipher")
+	void HintPuzzle();
 
 
 };
