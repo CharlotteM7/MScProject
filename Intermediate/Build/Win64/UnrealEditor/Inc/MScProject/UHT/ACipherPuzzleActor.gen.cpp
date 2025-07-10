@@ -256,6 +256,14 @@ struct Z_Construct_UClass_AACipherPuzzleActor_Statics
 		{ "Category", "Cipher" },
 		{ "ModuleRelativePath", "ACipherPuzzleActor.h" },
 	};
+	static constexpr UECodeGen_Private::FMetaDataPairParam NewProp_FinalWidgetClass_MetaData[] = {
+		{ "Category", "UI" },
+		{ "ModuleRelativePath", "ACipherPuzzleActor.h" },
+	};
+	static constexpr UECodeGen_Private::FMetaDataPairParam NewProp_FinalWidgetInstance_MetaData[] = {
+		{ "EditInline", "true" },
+		{ "ModuleRelativePath", "ACipherPuzzleActor.h" },
+	};
 	static constexpr UECodeGen_Private::FMetaDataPairParam NewProp_bIsSolved_MetaData[] = {
 		{ "ModuleRelativePath", "ACipherPuzzleActor.h" },
 	};
@@ -275,6 +283,8 @@ struct Z_Construct_UClass_AACipherPuzzleActor_Statics
 	static const UECodeGen_Private::FObjectPropertyParams NewProp_ObjectiveManagerRef;
 	static const UECodeGen_Private::FIntPropertyParams NewProp_ObjectiveIndex;
 	static const UECodeGen_Private::FStrPropertyParams NewProp_HintMessage;
+	static const UECodeGen_Private::FClassPropertyParams NewProp_FinalWidgetClass;
+	static const UECodeGen_Private::FObjectPropertyParams NewProp_FinalWidgetInstance;
 	static void NewProp_bIsSolved_SetBit(void* Obj);
 	static const UECodeGen_Private::FBoolPropertyParams NewProp_bIsSolved;
 	static void NewProp_bPuzzleUIActive_SetBit(void* Obj);
@@ -305,6 +315,8 @@ const UECodeGen_Private::FObjectPropertyParams Z_Construct_UClass_AACipherPuzzle
 const UECodeGen_Private::FObjectPropertyParams Z_Construct_UClass_AACipherPuzzleActor_Statics::NewProp_ObjectiveManagerRef = { "ObjectiveManagerRef", nullptr, (EPropertyFlags)0x0010000000080008, UECodeGen_Private::EPropertyGenFlags::Object, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(AACipherPuzzleActor, ObjectiveManagerRef), Z_Construct_UClass_UObjectiveManager_NoRegister, METADATA_PARAMS(UE_ARRAY_COUNT(NewProp_ObjectiveManagerRef_MetaData), NewProp_ObjectiveManagerRef_MetaData) };
 const UECodeGen_Private::FIntPropertyParams Z_Construct_UClass_AACipherPuzzleActor_Statics::NewProp_ObjectiveIndex = { "ObjectiveIndex", nullptr, (EPropertyFlags)0x0010000000000005, UECodeGen_Private::EPropertyGenFlags::Int, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(AACipherPuzzleActor, ObjectiveIndex), METADATA_PARAMS(UE_ARRAY_COUNT(NewProp_ObjectiveIndex_MetaData), NewProp_ObjectiveIndex_MetaData) };
 const UECodeGen_Private::FStrPropertyParams Z_Construct_UClass_AACipherPuzzleActor_Statics::NewProp_HintMessage = { "HintMessage", nullptr, (EPropertyFlags)0x0010000000000001, UECodeGen_Private::EPropertyGenFlags::Str, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(AACipherPuzzleActor, HintMessage), METADATA_PARAMS(UE_ARRAY_COUNT(NewProp_HintMessage_MetaData), NewProp_HintMessage_MetaData) };
+const UECodeGen_Private::FClassPropertyParams Z_Construct_UClass_AACipherPuzzleActor_Statics::NewProp_FinalWidgetClass = { "FinalWidgetClass", nullptr, (EPropertyFlags)0x0014000000000001, UECodeGen_Private::EPropertyGenFlags::Class, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(AACipherPuzzleActor, FinalWidgetClass), Z_Construct_UClass_UClass, Z_Construct_UClass_UUserWidget_NoRegister, METADATA_PARAMS(UE_ARRAY_COUNT(NewProp_FinalWidgetClass_MetaData), NewProp_FinalWidgetClass_MetaData) };
+const UECodeGen_Private::FObjectPropertyParams Z_Construct_UClass_AACipherPuzzleActor_Statics::NewProp_FinalWidgetInstance = { "FinalWidgetInstance", nullptr, (EPropertyFlags)0x0010000000080008, UECodeGen_Private::EPropertyGenFlags::Object, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(AACipherPuzzleActor, FinalWidgetInstance), Z_Construct_UClass_UUserWidget_NoRegister, METADATA_PARAMS(UE_ARRAY_COUNT(NewProp_FinalWidgetInstance_MetaData), NewProp_FinalWidgetInstance_MetaData) };
 void Z_Construct_UClass_AACipherPuzzleActor_Statics::NewProp_bIsSolved_SetBit(void* Obj)
 {
 	((AACipherPuzzleActor*)Obj)->bIsSolved = 1;
@@ -328,6 +340,8 @@ const UECodeGen_Private::FPropertyParamsBase* const Z_Construct_UClass_AACipherP
 	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_AACipherPuzzleActor_Statics::NewProp_ObjectiveManagerRef,
 	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_AACipherPuzzleActor_Statics::NewProp_ObjectiveIndex,
 	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_AACipherPuzzleActor_Statics::NewProp_HintMessage,
+	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_AACipherPuzzleActor_Statics::NewProp_FinalWidgetClass,
+	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_AACipherPuzzleActor_Statics::NewProp_FinalWidgetInstance,
 	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_AACipherPuzzleActor_Statics::NewProp_bIsSolved,
 	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_AACipherPuzzleActor_Statics::NewProp_bPuzzleUIActive,
 };
@@ -372,10 +386,10 @@ AACipherPuzzleActor::~AACipherPuzzleActor() {}
 struct Z_CompiledInDeferFile_FID_Masters_MScProject_Source_MScProject_ACipherPuzzleActor_h_Statics
 {
 	static constexpr FClassRegisterCompiledInInfo ClassInfo[] = {
-		{ Z_Construct_UClass_AACipherPuzzleActor, AACipherPuzzleActor::StaticClass, TEXT("AACipherPuzzleActor"), &Z_Registration_Info_UClass_AACipherPuzzleActor, CONSTRUCT_RELOAD_VERSION_INFO(FClassReloadVersionInfo, sizeof(AACipherPuzzleActor), 4199529055U) },
+		{ Z_Construct_UClass_AACipherPuzzleActor, AACipherPuzzleActor::StaticClass, TEXT("AACipherPuzzleActor"), &Z_Registration_Info_UClass_AACipherPuzzleActor, CONSTRUCT_RELOAD_VERSION_INFO(FClassReloadVersionInfo, sizeof(AACipherPuzzleActor), 3334020792U) },
 	};
 };
-static FRegisterCompiledInInfo Z_CompiledInDeferFile_FID_Masters_MScProject_Source_MScProject_ACipherPuzzleActor_h_2594027431(TEXT("/Script/MScProject"),
+static FRegisterCompiledInInfo Z_CompiledInDeferFile_FID_Masters_MScProject_Source_MScProject_ACipherPuzzleActor_h_2005089140(TEXT("/Script/MScProject"),
 	Z_CompiledInDeferFile_FID_Masters_MScProject_Source_MScProject_ACipherPuzzleActor_h_Statics::ClassInfo, UE_ARRAY_COUNT(Z_CompiledInDeferFile_FID_Masters_MScProject_Source_MScProject_ACipherPuzzleActor_h_Statics::ClassInfo),
 	nullptr, 0,
 	nullptr, 0);

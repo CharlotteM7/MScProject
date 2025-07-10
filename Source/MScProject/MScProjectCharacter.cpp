@@ -194,12 +194,10 @@ void AMScProjectCharacter::Interact(const FInputActionValue& Value)
 
 		if (AACipherPuzzleActor* Puzzle = Cast<AACipherPuzzleActor>(HitActor))
 		{
-			UE_LOG(LogTemp, Warning, TEXT(" PuzzleActor branch"));
 			Puzzle->ActivatePuzzle();
 		}
 		else if (AClue* Clue = Cast<AClue>(HitActor))
 		{
-			UE_LOG(LogTemp, Warning, TEXT(" Clue branch"));
 			Clue->ActivateClue();
 		}
 		if (InteractionSound)
@@ -211,8 +209,6 @@ void AMScProjectCharacter::Interact(const FInputActionValue& Value)
 	{
 		UE_LOG(LogTemp, Warning, TEXT("Interact trace hit nothing"));
 	}
-
-
 }
 
 void AMScProjectCharacter::View(const FInputActionValue& Value)
@@ -232,8 +228,7 @@ void AMScProjectCharacter::View(const FInputActionValue& Value)
 			NotebookWidgetRef->SetAnchorsInViewport(FAnchors(0, 0, 1, 1));
 			NotebookWidgetRef->SetAlignmentInViewport(FVector2D(0, 0));
 		}
-	}
-	if (ViewSound)
+	} if (ViewSound)
 	{
 		UGameplayStatics::PlaySoundAtLocation(this, ViewSound, GetActorLocation());
 	}

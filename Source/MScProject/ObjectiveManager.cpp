@@ -36,7 +36,6 @@ void UObjectiveManager::NotifyPuzzleSolved(int32 Index)
     if (!Objectives.IsValidIndex(Index))
         return;
 
-    // If they're telling us the puzzle at 'Index' is solved...
     FObjective& Obj = Objectives[Index];
     if (!Obj.bIsComplete)
     {

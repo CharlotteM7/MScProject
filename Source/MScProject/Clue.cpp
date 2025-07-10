@@ -14,7 +14,7 @@ void AClue::ActivateClue()
 {
     if (bUIActive || !ClueWidgetClass)
     {
-        UE_LOG(LogTemp, Warning, TEXT("ActivateClue skipped: already active or no widget class"));
+ 
         return;
     }
 
@@ -24,7 +24,7 @@ void AClue::ActivateClue()
     ClueWidgetInstance = CreateWidget<UUserWidget>(GetWorld(), ClueWidgetClass);
     if (!ClueWidgetInstance)
     {
-        UE_LOG(LogTemp, Error, TEXT("Failed to create ClueWidgetInstance!"));
+ 
         bUIActive = false;
         return;
     }
@@ -35,11 +35,11 @@ void AClue::ActivateClue()
         FSetOwnerParams Params;
         Params.ClueRef = this;
         ClueWidgetInstance->ProcessEvent(SetOwnerFunc, &Params);
-        UE_LOG(LogTemp, Warning, TEXT("Set ClueRef on clue widget"));
+  
     }
 
     ClueWidgetInstance->AddToViewport();
-    UGameplayStatics::SetGamePaused(GetWorld(), true);
+
 
 
     // Switch to UI input mode
@@ -54,8 +54,6 @@ void AClue::ActivateClue()
 
     // Broadcast the event so anyone listening (e.g. ObjectiveManager) can react
     OnClueFound.Broadcast(ClueID);
-    UE_LOG(LogTemp, Warning, TEXT("Clue activated: %s"), *ClueID.ToString());
-
    
     if (ACharacter* PC = UGameplayStatics::GetPlayerCharacter(this, 0))
     {
@@ -68,10 +66,7 @@ void AClue::ActivateClue()
             UE_LOG(LogTemp, Error, TEXT("ActivateClue: No ObjectiveManager on player"));
         }
     }
-    else
-    {
-        UE_LOG(LogTemp, Error, TEXT("ActivateClue: No PlayerCharacter found"));
-    }
+  
 }
 
 void AClue::ExitClue()
@@ -81,9 +76,9 @@ void AClue::ExitClue()
     // Remove widget from viewport
     if (ClueWidgetInstance && ClueWidgetInstance->IsInViewport())
     {
-        UE_LOG(LogTemp, Warning, TEXT("Removing clue widget from viewport"));
+
         ClueWidgetInstance->RemoveFromParent();
-        ClueWidgetInstance = nullptr; // Set to nullptr so it gets recreated next time
+        ClueWidgetInstance = nullptr; 
     }
 
     // Restore input and mappings
@@ -100,8 +95,7 @@ void AClue::ExitClue()
             }
         }
     }
-    UGameplayStatics::SetGamePaused(GetWorld(), false);
 
     bUIActive = false;
-    UE_LOG(LogTemp, Warning, TEXT("Clue exited"));
+
 }

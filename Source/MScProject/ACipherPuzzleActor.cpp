@@ -112,7 +112,6 @@ void AACipherPuzzleActor::ActivatePuzzle()
     ActiveContainerWidget = ContainerWidget;
     ActiveContainerWidget->AddToViewport();
     UE_LOG(LogTemp, Warning, TEXT("Notebook container created: %s"), *ContainerWidget->GetName());
-    UGameplayStatics::SetGamePaused(GetWorld(), true);
 
     if (APlayerController* PC = GetWorld()->GetFirstPlayerController())
     {
@@ -125,15 +124,9 @@ void AACipherPuzzleActor::ActivatePuzzle()
 }
 
 
-
-
 void AACipherPuzzleActor::SubmitSolution(const FString& PlayerInput)
 {
     if (!CipherWidgetInstance) return;
-
-    UE_LOG(LogTemp, Warning, TEXT("SubmitSolution called"));
-    UE_LOG(LogTemp, Warning, TEXT("Player input: %s | Correct: %s"), *PlayerInput, *CorrectSolution);
-
     FText Feedback;
 
     if (PlayerInput.Equals(CorrectSolution, ESearchCase::IgnoreCase))
@@ -150,10 +143,8 @@ void AACipherPuzzleActor::SubmitSolution(const FString& PlayerInput)
         // Cleanup notebook container
         if (ActiveContainerWidget && ActiveContainerWidget->IsInViewport())
         {
-            UE_LOG(LogTemp, Warning, TEXT("Removing container: %s"), *ActiveContainerWidget->GetName());
             ActiveContainerWidget->RemoveFromParent();
             ActiveContainerWidget = nullptr;
-            UGameplayStatics::SetGamePaused(GetWorld(), false);
         }
 
         // Restore input
@@ -170,7 +161,33 @@ void AACipherPuzzleActor::SubmitSolution(const FString& PlayerInput)
         {
             ObjectiveManagerRef->NotifyPuzzleSolved(ObjectiveIndex);
         }
+        const int32 LastIndex = ObjectiveManagerRef
+            ? (ObjectiveManagerRef->Objectives.Num() - 1)
+            : -1;
 
+        if (ObjectiveIndex == LastIndex && FinalWidgetClass)
+        {
+            // instantiate it once
+            if (!FinalWidgetInstance)
+            {
+                FinalWidgetInstance = CreateWidget<UUserWidget>(GetWorld(), FinalWidgetClass);
+            }
+            // show it
+            if (FinalWidgetInstance)
+            {
+                FinalWidgetInstance->AddToViewport();
+
+                // switch to UI-only input so mouse works
+                if (APlayerController* PC = GetWorld()->GetFirstPlayerController())
+                {
+                    PC->bShowMouseCursor = true;
+                    FInputModeUIOnly Im;
+                    Im.SetWidgetToFocus(FinalWidgetInstance->TakeWidget());
+                    Im.SetLockMouseToViewportBehavior(EMouseLockMode::DoNotLock);
+                    PC->SetInputMode(Im);
+                }
+            }
+        }
     } else
     {
         Feedback = FText::FromString("Try again.");
@@ -216,12 +233,7 @@ void AACipherPuzzleActor::ExitPuzzle()
                 Subsystem->AddMappingContext(DefaultMappingContext, 0);
             }
         }
-    }
-    UGameplayStatics::SetGamePaused(GetWorld(), false);
-
-    bPuzzleUIActive = false;
-
-
+    } bPuzzleUIActive = false;
 }
 
 

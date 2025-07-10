@@ -64,6 +64,12 @@ public:
 	UPROPERTY(EditAnywhere, Category = "Cipher")
 	FString HintMessage;
 
+	UPROPERTY(EditAnywhere, Category = "UI")
+	TSubclassOf<UUserWidget> FinalWidgetClass;
+
+	UPROPERTY()
+	UUserWidget* FinalWidgetInstance = nullptr;
+
 	UPROPERTY()
 	bool bIsSolved;
 
