@@ -31,6 +31,7 @@ void AMScProjectCharacter::BeginPlay()
 		if (MenuWidgetRef)
 		{
 			MenuWidgetRef->AddToViewport();
+
 			// lock controls to UI
 			if (APlayerController* PC = Cast<APlayerController>(Controller))
 			{
@@ -84,6 +85,7 @@ AMScProjectCharacter::AMScProjectCharacter()
 	// Note: The skeletal mesh and anim blueprint references on the Mesh component (inherited from Character) 
 	// are set in the derived blueprint asset named ThirdPersonCharacter (to avoid direct content references in C++)
 }
+
 
 //////////////////////////////////////////////////////////////////////////
 // Input
@@ -200,6 +202,10 @@ void AMScProjectCharacter::Interact(const FInputActionValue& Value)
 			UE_LOG(LogTemp, Warning, TEXT(" Clue branch"));
 			Clue->ActivateClue();
 		}
+		if (InteractionSound)
+		{
+			UGameplayStatics::PlaySoundAtLocation(this, InteractionSound, GetActorLocation());
+		}
 	}
 	else
 	{
@@ -216,6 +222,7 @@ void AMScProjectCharacter::View(const FInputActionValue& Value)
 		NotebookWidgetRef->RemoveFromParent();
 		NotebookWidgetRef = nullptr;
 	}
+
 	else if (NotebookWidgetClass)
 	{
 		NotebookWidgetRef = CreateWidget<UUserWidget>(GetWorld(), NotebookWidgetClass);
@@ -225,6 +232,10 @@ void AMScProjectCharacter::View(const FInputActionValue& Value)
 			NotebookWidgetRef->SetAnchorsInViewport(FAnchors(0, 0, 1, 1));
 			NotebookWidgetRef->SetAlignmentInViewport(FVector2D(0, 0));
 		}
+	}
+	if (ViewSound)
+	{
+		UGameplayStatics::PlaySoundAtLocation(this, ViewSound, GetActorLocation());
 	}
 }
 

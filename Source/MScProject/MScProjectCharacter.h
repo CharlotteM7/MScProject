@@ -73,6 +73,17 @@ class AMScProjectCharacter : public ACharacter
 	UPROPERTY()
 	UUserWidget* MenuWidgetRef = nullptr;
 
+	UPROPERTY(EditAnywhere, Category = "Audio")
+	USoundBase* InteractionSound;
+
+	UPROPERTY(EditAnywhere, Category = "Audio")
+	USoundBase* ViewSound;
+
+
+
+protected:
+
+
 public:
 	AMScProjectCharacter();
 	

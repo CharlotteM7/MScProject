@@ -13,6 +13,7 @@ void EmptyLinkFunctionForGeneratedCodeMScProjectCharacter() {}
 COREUOBJECT_API UClass* Z_Construct_UClass_UClass();
 ENGINE_API UClass* Z_Construct_UClass_ACharacter();
 ENGINE_API UClass* Z_Construct_UClass_UCameraComponent_NoRegister();
+ENGINE_API UClass* Z_Construct_UClass_USoundBase_NoRegister();
 ENGINE_API UClass* Z_Construct_UClass_USpringArmComponent_NoRegister();
 ENHANCEDINPUT_API UClass* Z_Construct_UClass_UInputAction_NoRegister();
 ENHANCEDINPUT_API UClass* Z_Construct_UClass_UInputMappingContext_NoRegister();
@@ -152,6 +153,14 @@ struct Z_Construct_UClass_AMScProjectCharacter_Statics
 		{ "EditInline", "true" },
 		{ "ModuleRelativePath", "MScProjectCharacter.h" },
 	};
+	static constexpr UECodeGen_Private::FMetaDataPairParam NewProp_InteractionSound_MetaData[] = {
+		{ "Category", "Audio" },
+		{ "ModuleRelativePath", "MScProjectCharacter.h" },
+	};
+	static constexpr UECodeGen_Private::FMetaDataPairParam NewProp_ViewSound_MetaData[] = {
+		{ "Category", "Audio" },
+		{ "ModuleRelativePath", "MScProjectCharacter.h" },
+	};
 #endif // WITH_METADATA
 	static const UECodeGen_Private::FObjectPropertyParams NewProp_CameraBoom;
 	static const UECodeGen_Private::FObjectPropertyParams NewProp_FollowCamera;
@@ -165,6 +174,8 @@ struct Z_Construct_UClass_AMScProjectCharacter_Statics
 	static const UECodeGen_Private::FClassPropertyParams NewProp_NotebookWidgetClass;
 	static const UECodeGen_Private::FClassPropertyParams NewProp_MenuWidgetClass;
 	static const UECodeGen_Private::FObjectPropertyParams NewProp_MenuWidgetRef;
+	static const UECodeGen_Private::FObjectPropertyParams NewProp_InteractionSound;
+	static const UECodeGen_Private::FObjectPropertyParams NewProp_ViewSound;
 	static const UECodeGen_Private::FPropertyParamsBase* const PropPointers[];
 	static UObject* (*const DependentSingletons[])();
 	static constexpr FCppClassTypeInfoStatic StaticCppClassTypeInfo = {
@@ -184,6 +195,8 @@ const UECodeGen_Private::FObjectPropertyParams Z_Construct_UClass_AMScProjectCha
 const UECodeGen_Private::FClassPropertyParams Z_Construct_UClass_AMScProjectCharacter_Statics::NewProp_NotebookWidgetClass = { "NotebookWidgetClass", nullptr, (EPropertyFlags)0x0044000000000001, UECodeGen_Private::EPropertyGenFlags::Class, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(AMScProjectCharacter, NotebookWidgetClass), Z_Construct_UClass_UClass, Z_Construct_UClass_UUserWidget_NoRegister, METADATA_PARAMS(UE_ARRAY_COUNT(NewProp_NotebookWidgetClass_MetaData), NewProp_NotebookWidgetClass_MetaData) };
 const UECodeGen_Private::FClassPropertyParams Z_Construct_UClass_AMScProjectCharacter_Statics::NewProp_MenuWidgetClass = { "MenuWidgetClass", nullptr, (EPropertyFlags)0x0044000000000001, UECodeGen_Private::EPropertyGenFlags::Class, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(AMScProjectCharacter, MenuWidgetClass), Z_Construct_UClass_UClass, Z_Construct_UClass_UUserWidget_NoRegister, METADATA_PARAMS(UE_ARRAY_COUNT(NewProp_MenuWidgetClass_MetaData), NewProp_MenuWidgetClass_MetaData) };
 const UECodeGen_Private::FObjectPropertyParams Z_Construct_UClass_AMScProjectCharacter_Statics::NewProp_MenuWidgetRef = { "MenuWidgetRef", nullptr, (EPropertyFlags)0x0040000000080008, UECodeGen_Private::EPropertyGenFlags::Object, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(AMScProjectCharacter, MenuWidgetRef), Z_Construct_UClass_UUserWidget_NoRegister, METADATA_PARAMS(UE_ARRAY_COUNT(NewProp_MenuWidgetRef_MetaData), NewProp_MenuWidgetRef_MetaData) };
+const UECodeGen_Private::FObjectPropertyParams Z_Construct_UClass_AMScProjectCharacter_Statics::NewProp_InteractionSound = { "InteractionSound", nullptr, (EPropertyFlags)0x0040000000000001, UECodeGen_Private::EPropertyGenFlags::Object, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(AMScProjectCharacter, InteractionSound), Z_Construct_UClass_USoundBase_NoRegister, METADATA_PARAMS(UE_ARRAY_COUNT(NewProp_InteractionSound_MetaData), NewProp_InteractionSound_MetaData) };
+const UECodeGen_Private::FObjectPropertyParams Z_Construct_UClass_AMScProjectCharacter_Statics::NewProp_ViewSound = { "ViewSound", nullptr, (EPropertyFlags)0x0040000000000001, UECodeGen_Private::EPropertyGenFlags::Object, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(AMScProjectCharacter, ViewSound), Z_Construct_UClass_USoundBase_NoRegister, METADATA_PARAMS(UE_ARRAY_COUNT(NewProp_ViewSound_MetaData), NewProp_ViewSound_MetaData) };
 const UECodeGen_Private::FPropertyParamsBase* const Z_Construct_UClass_AMScProjectCharacter_Statics::PropPointers[] = {
 	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_AMScProjectCharacter_Statics::NewProp_CameraBoom,
 	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_AMScProjectCharacter_Statics::NewProp_FollowCamera,
@@ -197,6 +210,8 @@ const UECodeGen_Private::FPropertyParamsBase* const Z_Construct_UClass_AMScProje
 	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_AMScProjectCharacter_Statics::NewProp_NotebookWidgetClass,
 	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_AMScProjectCharacter_Statics::NewProp_MenuWidgetClass,
 	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_AMScProjectCharacter_Statics::NewProp_MenuWidgetRef,
+	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_AMScProjectCharacter_Statics::NewProp_InteractionSound,
+	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_AMScProjectCharacter_Statics::NewProp_ViewSound,
 };
 static_assert(UE_ARRAY_COUNT(Z_Construct_UClass_AMScProjectCharacter_Statics::PropPointers) < 2048);
 UObject* (*const Z_Construct_UClass_AMScProjectCharacter_Statics::DependentSingletons[])() = {
@@ -239,10 +254,10 @@ AMScProjectCharacter::~AMScProjectCharacter() {}
 struct Z_CompiledInDeferFile_FID_Masters_MScProject_Source_MScProject_MScProjectCharacter_h_Statics
 {
 	static constexpr FClassRegisterCompiledInInfo ClassInfo[] = {
-		{ Z_Construct_UClass_AMScProjectCharacter, AMScProjectCharacter::StaticClass, TEXT("AMScProjectCharacter"), &Z_Registration_Info_UClass_AMScProjectCharacter, CONSTRUCT_RELOAD_VERSION_INFO(FClassReloadVersionInfo, sizeof(AMScProjectCharacter), 180545056U) },
+		{ Z_Construct_UClass_AMScProjectCharacter, AMScProjectCharacter::StaticClass, TEXT("AMScProjectCharacter"), &Z_Registration_Info_UClass_AMScProjectCharacter, CONSTRUCT_RELOAD_VERSION_INFO(FClassReloadVersionInfo, sizeof(AMScProjectCharacter), 838794167U) },
 	};
 };
-static FRegisterCompiledInInfo Z_CompiledInDeferFile_FID_Masters_MScProject_Source_MScProject_MScProjectCharacter_h_656027921(TEXT("/Script/MScProject"),
+static FRegisterCompiledInInfo Z_CompiledInDeferFile_FID_Masters_MScProject_Source_MScProject_MScProjectCharacter_h_1009222264(TEXT("/Script/MScProject"),
 	Z_CompiledInDeferFile_FID_Masters_MScProject_Source_MScProject_MScProjectCharacter_h_Statics::ClassInfo, UE_ARRAY_COUNT(Z_CompiledInDeferFile_FID_Masters_MScProject_Source_MScProject_MScProjectCharacter_h_Statics::ClassInfo),
 	nullptr, 0,
 	nullptr, 0);
